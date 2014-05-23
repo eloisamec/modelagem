@@ -1,6 +1,6 @@
 package ModelagemESimulacao.Implementacao1;
 
-import utils.*;
+import structure.Celula;
 
 /**
  * Hello world!
@@ -8,6 +8,13 @@ import utils.*;
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println(Maths.Expo(30));
+
+		Celula c1 = new Celula("c1", 15);
+		Celula c2 = new Celula("c2", 30);
+		
+		//List<Evento> listaChamadas = new ArrayList<Evento>();
+		
+		
+
 	}
 }
