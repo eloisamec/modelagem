@@ -44,4 +44,9 @@ public class Maths {
 		
 		return x;
 	}
+	
+	public static int Poisson(double a) {
+		
+		return 0;
+	}
 }

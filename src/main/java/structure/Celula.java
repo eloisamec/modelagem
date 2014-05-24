@@ -5,13 +5,9 @@ public class Celula {
 	private String name;
 	private Integer canais;
 	
-	//para estatisticas
-	private Integer nrChamadasFinalizdas;
-	private Integer nrChamadasPerdidas;
-	
 	public Celula(String name, Integer canais) {
-		this.name = name;
-		this.canais = canais;
+		this.setName(name);
+		this.setCanais(canais);
 	}
 
 	public String getName() {
@@ -28,33 +24,5 @@ public class Celula {
 
 	public void setCanais(Integer canais) {
 		this.canais = canais;
-	}
-
-	public Integer getNrChamadasFinalizdas() {
-		return nrChamadasFinalizdas;
-	}
-
-	public void setNrChamadasFinalizdas(Integer nrChamadasFinalizdas) {
-		this.nrChamadasFinalizdas = nrChamadasFinalizdas;
-	}
-
-	public Integer getNrChamadasPerdidas() {
-		return nrChamadasPerdidas;
-	}
-
-	public void setNrChamadasPerdidas(Integer nrChamadasPerdidas) {
-		this.nrChamadasPerdidas = nrChamadasPerdidas;
-	}
-	
-	public void increaseNrChamadaFinalizada(){
-		this.nrChamadasFinalizdas++;
-	}
-	
-	public void increaseNrChamadaPerdida(){
-		this.nrChamadasPerdidas++;
-	}
-	
-	public Integer getNrTotalChamadas(){
-		return this.nrChamadasFinalizdas + this.nrChamadasPerdidas;
 	}
 }

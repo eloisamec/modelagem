@@ -1,31 +1,51 @@
 package structure;
 
-import enumeration.TipoEnum;
+import enumeration.TipoChamada;
+import enumeration.TipoDuracao;
 
 public class Chamada {
 	
-	private double duracao;
-	private TipoEnum tipo;
+	private int duracao;
+	private TipoChamada tipoChamada;
+	private TipoDuracao tipoDuracao;
+	private double probabilidadeDeOcorrencia;
 	
-	public Chamada(double duracao, TipoEnum tipo) {
-		this.duracao = duracao;
-		this.tipo = tipo;
+	public Chamada(int duracao, double probabilidadeDeOcorrencia, TipoChamada tipoChamada, TipoDuracao tipoDuracao) {
+		this.setTipoChamada(tipoChamada);
+		this.setProbabilidadeDeOcorrencia(probabilidadeDeOcorrencia);
+		this.setDuracao(duracao, tipoDuracao);
 	}
 
-	public double getDuracao() {
+	public int getDuracao() {
 		return duracao;
 	}
 
-	public void setDuracao(double duracao) {
+	public void setDuracao(int duracao, TipoDuracao tipoDuracao) {
 		this.duracao = duracao;
 	}
 
-	public TipoEnum getTipo() {
-		return tipo;
+	public TipoChamada getTipoChamada() {
+		return tipoChamada;
 	}
 
-	public void setTipo(TipoEnum tipo) {
-		this.tipo = tipo;
+	public void setTipoChamada(TipoChamada tipo) {
+		this.tipoChamada = tipo;
+	}
+
+	public double getProbabilidadeDeOcorrencia() {
+		return probabilidadeDeOcorrencia;
+	}
+
+	public void setProbabilidadeDeOcorrencia(double probabilidadeDeOcorrencia) {
+		this.probabilidadeDeOcorrencia = probabilidadeDeOcorrencia;
+	}
+
+	public TipoDuracao getTipoDuracao() {
+		return tipoDuracao;
+	}
+
+	public void setTipoDuracao(TipoDuracao tipoDuracao) {
+		this.tipoDuracao = tipoDuracao;
 	}
 
 }
