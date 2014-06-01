@@ -6,6 +6,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import structure.Celula;
+import structure.EventoControl;
 import ui.UI;
 
 public class App {
@@ -29,10 +30,15 @@ public class App {
 			}
 		});
 		
+		//get number of lines from ui
 		Celula c1 = new Celula("c1", 15);
 		Celula c2 = new Celula("c2", 30);
+		EventoControl eventoControl = new EventoControl(c1, c2);
 		
-		//listaChamadas = new ArrayList<Evento>();
+		eventoControl.fillListaEventos();
+		
+		eventoControl.run();
+	
 		
 		
 
