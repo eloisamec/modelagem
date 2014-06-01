@@ -24,13 +24,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("rawtypes")
 public class UI {
-
 	public JFrame mainFrame;
 	public static JTextArea textAreaResultado = null;
 	public static JButton buttonAnalisarSimulaoSelecionada;
@@ -75,6 +74,13 @@ public class UI {
 	private JTextField textFieldTriaMinC2;
 	private JTextField textFieldTriaMedC1;
 	private JTextField textFieldTriaMinC1;
+	private JTextField textFieldUniforme1C1;
+	private JTextField textFieldUniforme2C1;
+	private JTextField textFieldUniforme1C2;
+	private JTextField textFieldUniforme2C2;
+	private JTextField textFieldDuracaoExpoC2;
+	private JTextField textFieldDuracaoExpoC1;
+	private JTextField textFieldDuracaoSimulacao;
 	
 	public UI() {
 		initialize();
@@ -216,26 +222,26 @@ public class UI {
 		buttonSimulacao.setForeground(new Color(0, 100, 0));
 
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 43, 48, 14);
+		lblNome.setBounds(10, 48, 48, 14);
 		panelSimulacoes.add(lblNome);
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		textFieldNome = new JTextField();
-		textFieldNome.setBounds(68, 40, 124, 20);
+		textFieldNome.setBounds(68, 45, 124, 20);
 		panelSimulacoes.add(textFieldNome);
 		textFieldNome.setText("Simula\u00E7\u00E3o 1");
 		textFieldNome.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldNome.setColumns(10);
 
 		labelIteracoes = new JLabel("0/2.000.000 itera\u00E7\u00F5es.");
-		labelIteracoes.setBounds(184, 45, 289, 14);
+		labelIteracoes.setBounds(92, 256, 289, 14);
 		panelSimulacoes.add(labelIteracoes);
 		labelIteracoes.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		labelIteracoes.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		panelCelula1 = new JPanel();
-		panelCelula1.setBounds(10, 68, 202, 216);
+		panelCelula1.setBounds(10, 68, 202, 184);
 		panelSimulacoes.add(panelCelula1);
 		panelCelula1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "C\u00E9lula 1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelCelula1.setLayout(null);
@@ -280,7 +286,7 @@ public class UI {
 		
 		panelDuracaoC1 = new JPanel();
 		panelDuracaoC1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Dura\u00E7\u00E3o das Chamadas", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 11), null));
-		panelDuracaoC1.setBounds(10, 100, 183, 105);
+		panelDuracaoC1.setBounds(10, 100, 183, 73);
 		panelCelula1.add(panelDuracaoC1);
 		panelDuracaoC1.setLayout(null);
 		
@@ -334,53 +340,53 @@ public class UI {
 		textFieldNormalMaxC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldNormalMaxC1.setColumns(10);
 		
-		final JLabel labelMinimoC1 = new JLabel("mín.");
-		labelMinimoC1.setBounds(60, 72, 20, 14);
-		panelDuracaoC1.add(labelMinimoC1);
-		labelMinimoC1.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMinimoC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
-		final JLabel labelMaximoC1 = new JLabel("máx.");
-		labelMaximoC1.setBounds(90, 72, 24, 14);
-		panelDuracaoC1.add(labelMaximoC1);
-		labelMaximoC1.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMaximoC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
 		textFieldTriaMaxC1 = new JTextField();
+		textFieldTriaMaxC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldTriaMaxC1.setText("15");
 		textFieldTriaMaxC1.setColumns(10);
 		textFieldTriaMaxC1.setBounds(120, 44, 28, 20);
 		panelDuracaoC1.add(textFieldTriaMaxC1);
 		
-		final JLabel labelTriaMaxC1 = new JLabel("máx.");
-		labelTriaMaxC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		labelTriaMaxC1.setBounds(124, 72, 24, 14);
-		panelDuracaoC1.add(labelTriaMaxC1);
-		
-		final JLabel labelTriaMedC1 = new JLabel("med.");
-		labelTriaMedC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		labelTriaMedC1.setBounds(88, 72, 24, 14);
-		panelDuracaoC1.add(labelTriaMedC1);
-		
 		textFieldTriaMedC1 = new JTextField();
+		textFieldTriaMedC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldTriaMedC1.setColumns(10);
 		textFieldTriaMedC1.setBounds(88, 44, 28, 20);
 		panelDuracaoC1.add(textFieldTriaMedC1);
+		textFieldTriaMedC1.setVisible(false);
 		
 		textFieldTriaMinC1 = new JTextField();
+		textFieldTriaMinC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldTriaMinC1.setColumns(10);
 		textFieldTriaMinC1.setBounds(56, 44, 28, 20);
 		panelDuracaoC1.add(textFieldTriaMinC1);
+		textFieldTriaMinC1.setVisible(false);
 		
-		labelMaximoC1.setVisible(false);
-		labelMinimoC1.setVisible(false);
+		textFieldUniforme1C1 = new JTextField();
+		textFieldUniforme1C1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldUniforme1C1.setBounds(56, 44, 28, 20);
+		panelDuracaoC1.add(textFieldUniforme1C1);
+		textFieldUniforme1C1.setColumns(10);
+		
+		textFieldUniforme2C1 = new JTextField();
+		textFieldUniforme2C1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldUniforme2C1.setColumns(10);
+		textFieldUniforme2C1.setBounds(88, 44, 28, 20);
+		panelDuracaoC1.add(textFieldUniforme2C1);
+		
+		textFieldDuracaoExpoC1 = new JTextField();
+		textFieldDuracaoExpoC1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldDuracaoExpoC1.setColumns(10);
+		textFieldDuracaoExpoC1.setBounds(56, 44, 28, 20);
+		panelDuracaoC1.add(textFieldDuracaoExpoC1);
+		
+		lblValoresC1.setVisible(false);
 		textFieldNormalMaxC1.setVisible(false);
 		textFieldNormalMinC1.setVisible(false);
 		textFieldTriaMaxC1.setVisible(false);
-		textFieldTriaMedC1.setVisible(false);
-		textFieldTriaMinC1.setVisible(false);
-		lblValoresC1.setVisible(false);
-		labelTriaMaxC1.setVisible(false);
-		labelTriaMedC1.setVisible(false);;
+		textFieldUniforme1C1.setVisible(false);
+		textFieldUniforme2C1.setVisible(false);
+		textFieldDuracaoExpoC1.setVisible(false);
+		
 		comboBoxC1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (comboBoxC1.getSelectedItem().toString().equals("Constante")) {
@@ -390,12 +396,11 @@ public class UI {
 					textFieldTriaMaxC1.setVisible(false);
 					textFieldTriaMedC1.setVisible(false);
 					textFieldTriaMinC1.setVisible(false);
+					textFieldUniforme1C1.setVisible(false);
+					textFieldUniforme2C1.setVisible(false);
+					textFieldDuracaoExpoC1.setVisible(false);
 					lblValorC1.setVisible(true);
 					lblValoresC1.setVisible(false);
-					labelMinimoC1.setVisible(false);
-					labelMaximoC1.setVisible(false);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMedC1.setVisible(false);
 					
 				} else if (comboBoxC1.getSelectedItem().toString().equals("Normal")) {
 					textFieldConstanteC1.setVisible(false);
@@ -404,12 +409,11 @@ public class UI {
 					textFieldTriaMaxC1.setVisible(false);
 					textFieldTriaMedC1.setVisible(false);
 					textFieldTriaMinC1.setVisible(false);
+					textFieldUniforme1C1.setVisible(false);
+					textFieldUniforme2C1.setVisible(false);
+					textFieldDuracaoExpoC1.setVisible(false);
 					lblValorC1.setVisible(false);
 					lblValoresC1.setVisible(true);
-					labelMinimoC1.setVisible(true);
-					labelMaximoC1.setVisible(true);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMedC1.setVisible(false);
 					
 				} else if (comboBoxC1.getSelectedItem().toString().equals("Triangular")) {
 					textFieldConstanteC1.setVisible(false);
@@ -418,12 +422,11 @@ public class UI {
 					textFieldTriaMaxC1.setVisible(true);
 					textFieldTriaMedC1.setVisible(true);
 					textFieldTriaMinC1.setVisible(true);
+					textFieldUniforme1C1.setVisible(false);
+					textFieldUniforme2C1.setVisible(false);
+					textFieldDuracaoExpoC1.setVisible(false);
 					lblValorC1.setVisible(false);
 					lblValoresC1.setVisible(true);
-					labelMaximoC1.setVisible(false);
-					labelTriaMaxC1.setVisible(true);
-					labelTriaMedC1.setVisible(true);
-					
 					
 				} else if (comboBoxC1.getSelectedItem().toString().equals("Uniforme")) {
 					textFieldConstanteC1.setVisible(false);
@@ -432,9 +435,11 @@ public class UI {
 					textFieldTriaMaxC1.setVisible(false);
 					textFieldTriaMedC1.setVisible(false);
 					textFieldTriaMinC1.setVisible(false);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMedC1.setVisible(false);
+					textFieldUniforme1C1.setVisible(true);
+					textFieldUniforme2C1.setVisible(true);
+					textFieldDuracaoExpoC1.setVisible(false);
+					lblValorC1.setVisible(false);
+					lblValoresC1.setVisible(true);
 					
 				} else if (comboBoxC1.getSelectedItem().toString().equals("Exponencial")) {
 					textFieldConstanteC1.setVisible(false);
@@ -443,15 +448,17 @@ public class UI {
 					textFieldTriaMaxC1.setVisible(false);
 					textFieldTriaMedC1.setVisible(false);
 					textFieldTriaMinC1.setVisible(false);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMaxC1.setVisible(false);
-					labelTriaMedC1.setVisible(false);
+					textFieldUniforme1C1.setVisible(false);
+					textFieldUniforme2C1.setVisible(false);
+					textFieldDuracaoExpoC1.setVisible(true);
+					lblValorC1.setVisible(true);
+					lblValoresC1.setVisible(false);
 				}
 			}
 		});
 		
 		panelCelula2 = new JPanel();
-		panelCelula2.setBounds(218, 68, 202, 216);
+		panelCelula2.setBounds(218, 68, 202, 184);
 		panelSimulacoes.add(panelCelula2);
 		panelCelula2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "C\u00E9lula 2", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelCelula2.setLayout(null);
@@ -496,7 +503,7 @@ public class UI {
 		
 		panelDuracaoC2 = new JPanel();
 		panelDuracaoC2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Dura\u00E7\u00E3o das Chamadas", TitledBorder.LEADING, TitledBorder.TOP, new Font("Tahoma", Font.PLAIN, 11), null));
-		panelDuracaoC2.setBounds(10, 100, 183, 105);
+		panelDuracaoC2.setBounds(10, 100, 183, 73);
 		panelDuracaoC2.setLayout(null);
 		panelCelula2.add(panelDuracaoC2);
 		
@@ -512,12 +519,12 @@ public class UI {
 		lblValorC2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblValorC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
-		textFieldNormalMinC2 = new JTextField();
-		textFieldNormalMinC2.setBounds(56, 44, 28, 20);
-		panelDuracaoC2.add(textFieldNormalMinC2);
-		textFieldNormalMinC2.setText("2");
-		textFieldNormalMinC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldNormalMinC2.setColumns(10);
+		textFieldConstanteC2 = new JTextField();
+		textFieldConstanteC2.setBounds(56, 44, 28, 20);
+		panelDuracaoC2.add(textFieldConstanteC2);
+		textFieldConstanteC2.setText("15");
+		textFieldConstanteC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldConstanteC2.setColumns(10);
 		
 		JLabel lblMinutosC2 = new JLabel("min.");
 		lblMinutosC2.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -531,13 +538,6 @@ public class UI {
 		lblValoresC2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblValoresC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
-		textFieldConstanteC2 = new JTextField();
-		textFieldConstanteC2.setBounds(56, 44, 28, 20);
-		panelDuracaoC2.add(textFieldConstanteC2);
-		textFieldConstanteC2.setText("15");
-		textFieldConstanteC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textFieldConstanteC2.setColumns(10);
-		
 		textFieldNormalMaxC2 = new JTextField();
 		textFieldNormalMaxC2.setBounds(88, 44, 28, 20);
 		panelDuracaoC2.add(textFieldNormalMaxC2);
@@ -545,22 +545,15 @@ public class UI {
 		textFieldNormalMaxC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldNormalMaxC2.setColumns(10);
 		
-		final JLabel labelMinimoC2 = new JLabel("mín.");
-		labelMinimoC2.setBounds(60, 72, 20, 14);
-		panelDuracaoC2.add(labelMinimoC2);
-		labelMinimoC2.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMinimoC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
-		final JLabel labelMaximoC2 = new JLabel("máx.");
-		labelMaximoC2.setBounds(90, 72, 24, 14);
-		panelDuracaoC2.add(labelMaximoC2);
-		labelMaximoC2.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelMaximoC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		labelMaximoC2.setVisible(false);
-		labelMinimoC2.setVisible(false);
+		textFieldNormalMinC2 = new JTextField();
+		textFieldNormalMinC2.setBounds(56, 44, 28, 20);
+		panelDuracaoC2.add(textFieldNormalMinC2);
+		textFieldNormalMinC2.setText("2");
+		textFieldNormalMinC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldNormalMinC2.setColumns(10);
+		textFieldNormalMinC2.setVisible(false);
 		textFieldNormalMaxC2.setVisible(false);
 		lblValoresC2.setVisible(false);
-		textFieldNormalMinC2.setVisible(false);
 		
 		comboBoxC2 = new JComboBox();
 		comboBoxC2.setBounds(56, 19, 117, 20);
@@ -568,29 +561,49 @@ public class UI {
 		comboBoxC2.setModel(new DefaultComboBoxModel(new String[] {"Constante", "Normal", "Triangular", "Uniforme", "Exponencial"}));
 		
 		textFieldTriaMaxC2 = new JTextField();
+		textFieldTriaMaxC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldTriaMaxC2.setBounds(120, 44, 28, 20);
 		panelDuracaoC2.add(textFieldTriaMaxC2);
 		textFieldTriaMaxC2.setColumns(10);
 		
-		JLabel lblTriaMaxC2 = new JLabel("máx.");
-		lblTriaMaxC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTriaMaxC2.setBounds(124, 72, 24, 14);
-		panelDuracaoC2.add(lblTriaMaxC2);
-		
-		JLabel lblTriaMedC2 = new JLabel("med.");
-		lblTriaMedC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTriaMedC2.setBounds(88, 72, 24, 14);
-		panelDuracaoC2.add(lblTriaMedC2);
-		
 		textFieldTriaMedC2 = new JTextField();
+		textFieldTriaMedC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldTriaMedC2.setColumns(10);
 		textFieldTriaMedC2.setBounds(88, 44, 28, 20);
 		panelDuracaoC2.add(textFieldTriaMedC2);
 		
 		textFieldTriaMinC2 = new JTextField();
+		textFieldTriaMinC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldTriaMinC2.setColumns(10);
 		textFieldTriaMinC2.setBounds(56, 44, 28, 20);
 		panelDuracaoC2.add(textFieldTriaMinC2);
+		
+		textFieldUniforme1C2 = new JTextField();
+		textFieldUniforme1C2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldUniforme1C2.setColumns(10);
+		textFieldUniforme1C2.setBounds(56, 44, 28, 20);
+		panelDuracaoC2.add(textFieldUniforme1C2);
+		
+		textFieldUniforme2C2 = new JTextField();
+		textFieldUniforme2C2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldUniforme2C2.setColumns(10);
+		textFieldUniforme2C2.setBounds(88, 44, 28, 20);
+		panelDuracaoC2.add(textFieldUniforme2C2);
+		
+		textFieldDuracaoExpoC2 = new JTextField();
+		textFieldDuracaoExpoC2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldDuracaoExpoC2.setColumns(10);
+		textFieldDuracaoExpoC2.setBounds(56, 44, 28, 20);
+		panelDuracaoC2.add(textFieldDuracaoExpoC2);
+		
+		textFieldNormalMaxC2.setVisible(false);
+		textFieldNormalMinC2.setVisible(false);
+		textFieldDuracaoExpoC2.setVisible(false);
+		textFieldTriaMaxC2.setVisible(false);
+		textFieldTriaMedC2.setVisible(false);
+		textFieldTriaMinC2.setVisible(false);
+		textFieldUniforme1C2.setVisible(false);
+		textFieldUniforme2C2.setVisible(false);
 		
 		comboBoxC2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
@@ -598,26 +611,64 @@ public class UI {
 					textFieldConstanteC2.setVisible(true);
 					textFieldNormalMaxC2.setVisible(false);
 					textFieldNormalMinC2.setVisible(false);
+					textFieldDuracaoExpoC2.setVisible(false);
+					textFieldTriaMaxC2.setVisible(false);
+					textFieldTriaMedC2.setVisible(false);
+					textFieldTriaMinC2.setVisible(false);
+					textFieldUniforme1C2.setVisible(false);
+					textFieldUniforme2C2.setVisible(false);
 					lblValorC2.setVisible(true);
 					lblValoresC2.setVisible(false);
-					labelMinimoC2.setVisible(false);
-					labelMaximoC2.setVisible(false);
 					
 				} else if (comboBoxC2.getSelectedItem().toString().equals("Normal")) {
 					textFieldConstanteC2.setVisible(false);
 					textFieldNormalMaxC2.setVisible(true);
 					textFieldNormalMinC2.setVisible(true);
+					textFieldDuracaoExpoC2.setVisible(false);
+					textFieldTriaMaxC2.setVisible(false);
+					textFieldTriaMedC2.setVisible(false);
+					textFieldTriaMinC2.setVisible(false);
+					textFieldUniforme1C2.setVisible(false);
+					textFieldUniforme2C2.setVisible(false);
 					lblValorC2.setVisible(false);
 					lblValoresC2.setVisible(true);
-					labelMinimoC2.setVisible(true);
-					labelMaximoC2.setVisible(true);
 					
 				} else if (comboBoxC2.getSelectedItem().toString().equals("Triangular")) {
-				
+					textFieldConstanteC2.setVisible(false);
+					textFieldNormalMaxC2.setVisible(false);
+					textFieldNormalMinC2.setVisible(false);
+					textFieldDuracaoExpoC2.setVisible(false);
+					textFieldTriaMaxC2.setVisible(true);
+					textFieldTriaMedC2.setVisible(true);
+					textFieldTriaMinC2.setVisible(true);
+					textFieldUniforme1C2.setVisible(false);
+					textFieldUniforme2C2.setVisible(false);
+					lblValorC2.setVisible(false);
+					lblValoresC2.setVisible(true);
 				} else if (comboBoxC2.getSelectedItem().toString().equals("Uniforme")) {
-					
+					textFieldConstanteC2.setVisible(false);
+					textFieldNormalMaxC2.setVisible(false);
+					textFieldNormalMinC2.setVisible(false);
+					textFieldDuracaoExpoC2.setVisible(false);
+					textFieldTriaMaxC2.setVisible(false);
+					textFieldTriaMedC2.setVisible(false);
+					textFieldTriaMinC2.setVisible(false);
+					textFieldUniforme1C2.setVisible(true);
+					textFieldUniforme2C2.setVisible(true);
+					lblValorC2.setVisible(false);
+					lblValoresC2.setVisible(true);
 				} else if (comboBoxC2.getSelectedItem().toString().equals("Exponencial")) {
-					
+					textFieldConstanteC2.setVisible(false);
+					textFieldNormalMaxC2.setVisible(false);
+					textFieldNormalMinC2.setVisible(false);
+					textFieldDuracaoExpoC2.setVisible(true);
+					textFieldTriaMaxC2.setVisible(false);
+					textFieldTriaMedC2.setVisible(false);
+					textFieldTriaMinC2.setVisible(false);
+					textFieldUniforme1C2.setVisible(false);
+					textFieldUniforme2C2.setVisible(false);
+					lblValorC2.setVisible(true);
+					lblValoresC2.setVisible(false);
 				}
 			}
 		});
@@ -755,6 +806,25 @@ public class UI {
 		panel_8.add(label_3);
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
+		JLabel labelDuracaoSimulacao = new JLabel("Duração:");
+		labelDuracaoSimulacao.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelDuracaoSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		labelDuracaoSimulacao.setBounds(231, 48, 44, 14);
+		panelSimulacoes.add(labelDuracaoSimulacao);
+		
+		textFieldDuracaoSimulacao = new JTextField();
+		textFieldDuracaoSimulacao.setText("30");
+		textFieldDuracaoSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldDuracaoSimulacao.setColumns(10);
+		textFieldDuracaoSimulacao.setBounds(289, 45, 70, 20);
+		panelSimulacoes.add(textFieldDuracaoSimulacao);
+		
+		JLabel lblMinutos = new JLabel("minutos");
+		lblMinutos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblMinutos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMinutos.setBounds(362, 48, 37, 14);
+		panelSimulacoes.add(lblMinutos);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Edi\u00E7\u00E3o e An\u00E1lise", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -780,7 +850,7 @@ public class UI {
 		panelDados.add(panel_4);
 		panel_4.setLayout(null);
 
-		buttonGerarGraficoDistancia = new JButton("Gerar Gr\u00E1fico de Dist\u00E2ncia");
+		buttonGerarGraficoDistancia = new JButton("Gerar Gráfico");
 		buttonGerarGraficoDistancia.setBounds(10, 21, 275, 23);
 		panel_4.add(buttonGerarGraficoDistancia);
 		buttonGerarGraficoDistancia.addActionListener(new ActionListener() {
