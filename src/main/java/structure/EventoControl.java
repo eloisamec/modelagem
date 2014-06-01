@@ -10,34 +10,30 @@ import enumeration.TipoRandom;
 //classe que controla os eventos
 public class EventoControl {
 
-	private double tempoAtual;
+	private double tempoAtual;       //em segundos
 	private List<Evento> listaEventos;
-	private double tempoTotalSimulacao;
-	
+	private double tempoTotalSimulacao;			 //tempo total de duracao da simulacao em segundos
 	private Long eventId; // id do mais novo evento
 
-	private double probChegadaC1;
+	private double probEntreChegadaC1;      //parametro para a funcao exponencial de chegade da celula 2
+	private double probEntreChegadaC2;		 //parametro para a funcao exponencial de chegade da celula 2
 	
-	private double probC1C1;
+	//as probabilidas CXFA vão ser de CXCY atá 1.0
+	private double probC1C1;   				
 	private double probC1C2;
 	private double probC2C2;
 	private double probC2C1;
 	
+	private double tempoChegada;
 	
+	private TipoRandom tipoDuracao;     //tipo da funcao randomica para gerar o tempo da duracao de uma chamada
 	
-	private TipoRandom tipoDuracao;
-	private TipoRandom tipoChegada;
-	private TipoRandom probTipoChamada;
-	private TipoRandom probTipoC1;
-	private TipoRandom probTipoC2;
-
 	private Celula celula1;
 	private Celula celula2;
+
 	
 
 	public EventoControl(Celula celula1, Celula celula2) {
-		this.celula1 = celula1;
-		this.celula2 = celula2;
 		this.listaEventos = new ArrayList<Evento>();
 		this.tempoAtual = 0.0;
 		this.eventId = -1L;
@@ -45,7 +41,7 @@ public class EventoControl {
 	
 	
 	public void setAllParameters(){
-		
+		//this.celula1 = new Celula(getName(), getLinhas());
 	}
 	
 	
@@ -53,11 +49,9 @@ public class EventoControl {
 	public void fillListaEventos() {
 		double tmpChegada = 0.0;
 		while(this.tempoAtual < this.tempoTotalSimulacao)	{
-			tmpChegada = this.getRandomTempoChegada();
-			List<Evento> tmp = this.createEvento(tmpChegada);
+			List<Evento> tmp = this.createEvento();
 			this.listaEventos.addAll(tmp);
-			this.tempoAtual = this.tempoAtual + tmpChegada;
-			
+
 		}
 	
 		//bubblesort
@@ -80,12 +74,15 @@ public class EventoControl {
 	}
 
 	public void run() {
-
+		do{
+			
+		}while(this.tempoAtual < this.tempoTotalSimulacao);
+		
+		
 	}
 
-	private List<Evento> createEvento(double tpChegada) {
+	private List<Evento> createEvento() {
 		double duracao = this.getRandomTempoDuracao();
-	
 		
 		TipoChamada tpChamada = this.getNewTipoChamada();
 		
@@ -93,22 +90,26 @@ public class EventoControl {
 		Chamada chamada = new Chamada(duracao, tpChamada);
 		this.eventId++;
 		List<Evento> eventos = new ArrayList<Evento>();
-		eventos.add(new Evento(0, tpChegada, this.eventId, chamada));
+		
 		if(tpChamada == enumeration.TipoChamada.C1C1 || tpChamada == enumeration.TipoChamada.C2C2){
-			eventos.add(new Evento(0, tpChegada + duracao, this.eventId, chamada));
+			
+			eventos.add(new Evento(1, this.tempoChegada + duracao, this.eventId, chamada));
 		}
 		if(tpChamada == enumeration.TipoChamada.C1C2 || tpChamada == enumeration.TipoChamada.C1C2){
-			eventos.add(new Evento(2, tpChegada + duracao/2, this.eventId, chamada));
-			eventos.add(new Evento(1, tpChegada + duracao, this.eventId, chamada));
+			eventos.add(new Evento(0, this.tempoChegada, this.eventId, chamada));
+			eventos.add(new Evento(2, this.tempoChegada + duracao/2, this.eventId, chamada));
+			eventos.add(new Evento(1, this.tempoChegada + duracao, this.eventId, chamada));
 		}
 		if(tpChamada == enumeration.TipoChamada.C1FA || tpChamada == enumeration.TipoChamada.C1FA){
-			eventos.add(new Evento(2, tpChegada + duracao/2, this.eventId, chamada));
+			eventos.add(new Evento(0, this.tempoChegada, this.eventId, chamada));
+			eventos.add(new Evento(2, this.tempoChegada + duracao/2, this.eventId, chamada));
 		}
 		
-		
+		this.tempoAtual = this.tempoAtual + this.tempoChegada;
 		return eventos;
 	}
 
+	//TODO pegar os parametros da UI para as funcoes aleatóricas
 	private double getRandomTempoDuracao() {
 		if (this.tipoDuracao == enumeration.TipoRandom.CONSTANTE ) {
 			return Maths.Uniforme(10, 20);
@@ -128,105 +129,47 @@ public class EventoControl {
 		return (Double) null;
 	}
 	
-	private double getRandomTempoChegada() {
-		if (this.tipoChegada == enumeration.TipoRandom.CONSTANTE ) {
-			return Maths.Uniforme(10, 20);
-		}
-		if(this.tipoChegada == enumeration.TipoRandom.UNIFORME){
-			return Maths.Uniforme(10, 10);
-		}
-		if (this.tipoChegada == enumeration.TipoRandom.EXPONENCIAL) {
-			return Maths.Expo(0.6);
-		}
-		if (this.tipoChegada == enumeration.TipoRandom.NORMAL) {
-			return Maths.Normal(10, 3);
-		}
-		if (this.tipoChegada == enumeration.TipoRandom.TRIANGULAR) {
-			return Maths.Triangular(10, 20, 30);
-		}
-		return (Double) null;
-	}
-	
-	
-	private double generateProbChamada(){
-		if (this.probTipoChamada == enumeration.TipoRandom.CONSTANTE ) {
-			return Maths.Uniforme(10, 20);
-		}
-		if(this.probTipoChamada == enumeration.TipoRandom.UNIFORME){
-			return Maths.Uniforme(10, 10);
-		}
-		if (this.probTipoChamada == enumeration.TipoRandom.EXPONENCIAL) {
-			return Maths.Expo(0.6);
-		}
-		if (this.probTipoChamada == enumeration.TipoRandom.NORMAL) {
-			return Maths.Normal(10, 3);
-		}
-		if (this.probTipoChamada == enumeration.TipoRandom.TRIANGULAR) {
-			return Maths.Triangular(10, 20, 30);
-		}
-		return (Double) null;
-	}
-	
-	
-	private double getRandomTipoC1() {
-		if (this.probTipoC1 == enumeration.TipoRandom.CONSTANTE ) {
-			return Maths.Uniforme(10, 20);
-		}
-		if(this.probTipoC1 == enumeration.TipoRandom.UNIFORME){
-			return Maths.Uniforme(10, 10);
-		}
-		if (this.probTipoC1 == enumeration.TipoRandom.EXPONENCIAL) {
-			return Maths.Expo(0.6);
-		}
-		if (this.probTipoC1 == enumeration.TipoRandom.NORMAL) {
-			return Maths.Normal(10, 3);
-		}
-		if (this.probTipoC1 == enumeration.TipoRandom.TRIANGULAR) {
-			return Maths.Triangular(10, 20, 30);
-		}
-		return (Double) null;
-	}
-	
-	private double getRandomTipoC2() {
-		if (this.probTipoC2 == enumeration.TipoRandom.CONSTANTE ) {
-			return Maths.Uniforme(10, 20);
-		}
-		if(this.probTipoC2 == enumeration.TipoRandom.UNIFORME){
-			return Maths.Uniforme(10, 10);
-		}
-		if (this.probTipoC2 == enumeration.TipoRandom.EXPONENCIAL) {
-			return Maths.Expo(0.6);
-		}
-		if (this.probTipoC2 == enumeration.TipoRandom.NORMAL) {
-			return Maths.Normal(10, 3);
-		}
-		if (this.probTipoC2 == enumeration.TipoRandom.TRIANGULAR) {
-			return Maths.Triangular(10, 20, 30);
-		}
-		return (Double) null;
-	}
+
 	
 	private TipoChamada getNewTipoChamada(){
-		if(this.generateProbChamada() < this.probChegadaC1){
-			double tmp = this.getRandomTipoC1(); 
-			if(tmp < this.probC1C1)
-					return TipoChamada.C1C1;
+		if(Maths.Rand() < 0.5){
+			double tmp = Maths.Rand(); 
+			if(tmp < this.probC1C1){
+				this.tempoChegada = Maths.Expo(this.probEntreChegadaC1);
+				return TipoChamada.C1C1;
+			}
+					
 			else{
-				if(tmp < this.probC1C2)
+				if(tmp < this.probC1C2){
+					this.tempoChegada = Maths.Expo(this.probEntreChegadaC1);
 					return TipoChamada.C1C2;
-				else
+				}
+					
+				else{
+					this.tempoChegada = Maths.Expo(this.probEntreChegadaC1);
 					return TipoChamada.C1FA;
+				}
+				
 			}
 		}
 		else {
-			double tmp = this.getRandomTipoC2(); 
-			if(tmp < this.probC2C2)
-					return TipoChamada.C2C2;
+			double tmp = Maths.Rand(); 
+			if(tmp < this.probC2C2){
+				this.tempoChegada = Maths.Expo(this.probEntreChegadaC2);
+				return TipoChamada.C2C2;
+			}
+					
 			else{
-				if(tmp < this.probC2C1)
+				if(tmp < this.probC2C1){
+					this.tempoChegada = Maths.Expo(this.probEntreChegadaC2);
 					return TipoChamada.C2C1;
-				else
+				}
+					
+				else{
+					this.tempoChegada = Maths.Expo(this.probEntreChegadaC2);
 					return TipoChamada.C2FA;
+				}
+					
 			}
 		}
 	}
@@ -272,14 +215,5 @@ public class EventoControl {
 		this.celula2 = celula2;
 	}
 
-
-	public TipoRandom getTipoChegada() {
-		return tipoChegada;
-	}
-
-
-	public void setTipoChegada(TipoRandom tipoChegada) {
-		this.tipoChegada = tipoChegada;
-	}
 
 }
