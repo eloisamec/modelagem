@@ -4,13 +4,20 @@ package utils;
 // Ver possibilidade de alterar esse nome!
 public class Estatisticas {
 	
-	public int nrChamadasChegandoNoSistema;
-	public double tempoEntreChegadas;
+	private int nrChamadasChegandoNoSistema;
+	private double tempoEntreChegadas;
 	private Integer nrChamadasFinalizadas;
 	private Integer nrChamadasPerdidas;
 	
-	public void setNrChamadasChegandoNoSistema(double tec) {
-		nrChamadasChegandoNoSistema = Maths.Poisson(tec); 
+	public void Estatisticas(){
+		this.nrChamadasChegandoNoSistema = 0;
+		this.nrChamadasFinalizadas = 0;
+		this.nrChamadasPerdidas = 0;
+		this.tempoEntreChegadas = 0;
+	}
+	
+	public void setNrChamadasChegandoNoSistema() {
+		nrChamadasChegandoNoSistema++; 
 	}
 	
 	public int getNrChamadasChegandoNoSistema() {
