@@ -2,20 +2,20 @@ package utils;
 
 public class MathsUtils {
 
-	public static double Rand() {
+	public static double rand() {
 		return Math.random();
 	}
 
-	public static int Expo(int lambda) {
-		double r = Rand();
+	public static int expo(int lambda) {
+		double r = rand();
 		double x = (-lambda) * (Math.log(1 - r));
 		System.out.println(x);
 		return (int) x;
 	}
 
-	public static int Normal(int a, int b) {
-		double r1 = Rand();
-		double r2 = Rand();
+	public static int normal(int a, int b) {
+		double r1 = rand();
+		double r2 = rand();
 
 		double z1 = Math.pow((-2 * Math.log(r1)), 0.5) * Math.cos(r2);
 		double x1 = b + (a * z1);
@@ -23,15 +23,15 @@ public class MathsUtils {
 		return (int) x1;
 	}
 
-	public static int Uniforme(int a, int b) {
-		double uniforme = a + ((b - a) * Rand());
+	public static int uniforme(int a, int b) {
+		double uniforme = a + ((b - a) * rand());
 
 		return (int) uniforme;
 	}
 
-	public static int Triangular(int a, int b, int c) {
+	public static int triangular(int a, int b, int c) {
 		double x = 0;
-		double random = Rand();
+		double random = rand();
 		double dist = (b - a) / (c - a);
 		if (random >= 0 && random <= dist) {
 			x = a + (Math.sqrt(random * (b - a) * (c - a)));

@@ -1,69 +1,109 @@
 package controllers;
 
-import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import utils.MathsUtils;
-import utils.Utils;
 import views.MainInterface;
 
 public class ChamadaController {
 
-	public static int getDuracaoChamada(TipoDuracao duracao, int a, int b, int c) {
-		int duracaoChamada;
-		if (duracao.equals(TipoDuracao.CONSTANTE)) {
-			duracaoChamada = a;
-		} else if (duracao.equals(TipoDuracao.NORMAL)) {
-			duracaoChamada = MathsUtils.Normal(a, b);
-		} else if (duracao.equals(TipoDuracao.TRIANGULAR)) {
-			duracaoChamada = MathsUtils.Triangular(a, b, c);
-		} else if (duracao.equals(TipoDuracao.UNIFORME)) {
-			duracaoChamada = MathsUtils.Uniforme(a, b);
-		} else {
-			duracaoChamada = MathsUtils.Expo(a);
+	private static int a1;
+	private static int b1;
+	private static int c1;
+	private static int a2;
+	private static int b2;
+	private static int c2;
+
+	public static int getDuracaoChamada(TipoDuracao duracao, int tipoCelula) {
+		a1 = Integer.parseInt(MainInterface.textFieldMinC1.getText());
+		b1 = Integer.parseInt(MainInterface.textFieldMedC1.getText());
+		c1 = Integer.parseInt(MainInterface.textFieldMaxC1.getText());
+		a2 = Integer.parseInt(MainInterface.textFieldMinC2.getText());
+		b2 = Integer.parseInt(MainInterface.textFieldMedC2.getText());
+		c2 = Integer.parseInt(MainInterface.textFieldMaxC2.getText());
+
+		int duracaoChamada = 0;
+
+		switch (duracao) {
+		case CONSTANTE:
+			duracaoChamada = getDuracaoConstante(tipoCelula);
+			break;
+		case EXPONENCIAL:
+			duracaoChamada = getDuracaoExponencial(tipoCelula);
+			break;
+		case NORMAL:
+			duracaoChamada = getDuracaoNormal(tipoCelula);
+			break;
+		case TRIANGULAR:
+			duracaoChamada = getDuracaoTriangular(tipoCelula);
+			break;
+		case UNIFORME:
+			duracaoChamada = getDuracaoUniforme(tipoCelula);
+			break;
+		default:
+			duracaoChamada = 1;
+			break;
 		}
 
 		return duracaoChamada;
 	}
 
-	public static TipoChamada getTipoChamada() {
-		int celulaPartida = (int) (Math.random() * 100);
-		int celulaChegada = (int) (Math.random() * 100);
+	private static int getDuracaoConstante(int tipoCelula) {
+		int duracaoChamada = 0;
 
-		TipoChamada tipoChamada;
-
-		if (celulaPartida <= 50) {
-			tipoChamada = getTipoChamadaC1(celulaChegada);
+		if (tipoCelula == 1) {
+			duracaoChamada = a1;
 		} else {
-			tipoChamada = getTipoChamadaC2(celulaChegada);
+			duracaoChamada = a2;
 		}
 
-		return tipoChamada;
+		return duracaoChamada;
 	}
 
-	public static TipoChamada getTipoChamadaC1(int celulaChegada) {
-		int probabilidadeC1C1 = Utils.filterByInteger(MainInterface.textFieldC1C1ProbValue.getText());
-		int probabilidadeC1C2 = Utils.filterByInteger(MainInterface.textFieldC1C2ProbValue.getText()) + probabilidadeC1C1;
+	private static int getDuracaoExponencial(int tipoCelula) {
+		int duracaoChamada = 0;
 
-		if (celulaChegada <= probabilidadeC1C1) {
-			return TipoChamada.C1C1;
+		if (tipoCelula == 1) {
+			duracaoChamada = MathsUtils.expo(a1);
+		} else {
+			duracaoChamada = MathsUtils.expo(a2);
 		}
-		if (celulaChegada > probabilidadeC1C1 && celulaChegada <= probabilidadeC1C2) {
-			return TipoChamada.C1C2;
-		}
-		return TipoChamada.C1FA;
+
+		return duracaoChamada;
 	}
 
-	public static TipoChamada getTipoChamadaC2(int celulaChegada) {
-		int probabilidadeC2C2 = Utils.filterByInteger(MainInterface.textFieldC2C2ProbValue.getText());
-		int probabilidadeC2C1 = Utils.filterByInteger(MainInterface.textFieldC2C1ProbValue.getText()) + probabilidadeC2C2;
+	private static int getDuracaoNormal(int tipoCelula) {
+		int duracaoChamada = 0;
 
-		if (celulaChegada <= probabilidadeC2C2) {
-			return TipoChamada.C2C2;
+		if (tipoCelula == 1) {
+			duracaoChamada = MathsUtils.normal(a1, b1);
+		} else {
+			duracaoChamada = MathsUtils.normal(a2, b2);
 		}
-		if (celulaChegada > probabilidadeC2C2 && celulaChegada <= probabilidadeC2C1) {
-			return TipoChamada.C2C1;
-		}
-		return TipoChamada.C2FA;
+
+		return duracaoChamada;
 	}
 
+	private static int getDuracaoTriangular(int tipoCelula) {
+		int duracaoChamada = 0;
+
+		if (tipoCelula == 1) {
+			duracaoChamada = MathsUtils.triangular(a1, b1, c1);
+		} else {
+			duracaoChamada = MathsUtils.triangular(a2, b2, c2);
+		}
+
+		return duracaoChamada;
+	}
+
+	private static int getDuracaoUniforme(int tipoCelula) {
+		int duracaoChamada = 0;
+
+		if (tipoCelula == 1) {
+			duracaoChamada = MathsUtils.uniforme(a1, b1);
+		} else {
+			duracaoChamada = MathsUtils.uniforme(a2, b2);
+		}
+
+		return duracaoChamada;
+	}
 }

@@ -58,10 +58,10 @@ public class Simulador implements Runnable {
 		tipoDuracaoC2 = TipoDuracao.get(nomeTipoDuracaoC2);
 
 		// Cria dois novos eventos de chegada, um para cada célula;
-		TipoChamada tipoChamadaC1 = ChamadaController.getTipoChamadaC1((int) Math.random() * 100);
+		TipoChamada tipoChamadaC1 = TipoChamadaController.getTipoChamadaC1((int) Math.random() * 100);
 		List<Evento> novosEventosC1 = EventoController.criarNovosEventosC1(tipoChamadaC1, tempoAtual, tipoDuracaoC1);
 
-		TipoChamada tipoChamadaC2 = ChamadaController.getTipoChamadaC2((int) Math.random() * 100);
+		TipoChamada tipoChamadaC2 = TipoChamadaController.getTipoChamadaC2((int) Math.random() * 100);
 		List<Evento> novosEventosC2 = EventoController.criarNovosEventosC2(tipoChamadaC2, tempoAtual, tipoDuracaoC2);
 
 		eventos.addAll(novosEventosC1);

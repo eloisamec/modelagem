@@ -16,7 +16,7 @@ public class EventoController {
 	public static ArrayList<Evento> criarNovosEventosC1(TipoChamada tipoChamada, int tempoAtual, TipoDuracao tipoDuracaoC1) {
 		ArrayList<Evento> eventos = new ArrayList<Evento>();
 
-		Evento eventoChegada = criarNovaChegada(Utils.filterByInteger(MainInterface.textFieldExpoC1.getText()), tempoAtual, tipoDuracaoC1, tipoChamada);
+		Evento eventoChegada = criarNovaChegada(Utils.filterByInteger(MainInterface.textFieldExpoC1.getText()), tempoAtual, tipoDuracaoC1, tipoChamada, 1);
 		eventos.add(eventoChegada);
 
 		if (!tipoChamada.equals(TipoChamada.C1FA)) {
@@ -36,7 +36,7 @@ public class EventoController {
 		ArrayList<Evento> eventos = new ArrayList<Evento>();
 
 		Evento eventoChegada = EventoController.criarNovaChegada(Utils.filterByInteger(MainInterface.textFieldExpoC2.getText()),
-				tempoAtual, tipoDuracaoC2, tipoChamada);
+				tempoAtual, tipoDuracaoC2, tipoChamada, 2);
 		eventos.add(eventoChegada);
 		if (!tipoChamada.equals(TipoChamada.C2FA)) {
 			Evento eventoSaida = EventoController.getNovaSaida(eventoChegada);
@@ -50,13 +50,11 @@ public class EventoController {
 		return eventos;
 	}
 
-	private static Evento criarNovaChegada(int lambda, int tempoAtual, TipoDuracao tipoDuracao, TipoChamada tipoChamada) {
-		int tempoChegada = MathsUtils.Expo(lambda) + tempoAtual;
-		
-		int duracaoChamada = ChamadaController.getDuracaoChamada(tipoDuracao);
+	private static Evento criarNovaChegada(int lambda, int tempoAtual, TipoDuracao tipoDuracao, TipoChamada tipoChamada, int tipoCelula) {
+		int tempoChegada = MathsUtils.expo(lambda) + tempoAtual;
+		int duracaoChamada = ChamadaController.getDuracaoChamada(tipoDuracao, tipoCelula);
 
 		Chamada chamada = new Chamada((duracaoChamada * 60), tipoChamada);
-		
 		EventoChegada chegada = new EventoChegada(tempoChegada, chamada, id);
 
 		return chegada;
