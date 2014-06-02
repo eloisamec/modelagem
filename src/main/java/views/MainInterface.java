@@ -31,7 +31,7 @@ import javax.swing.border.TitledBorder;
 import controllers.Simulador;
 
 @SuppressWarnings("rawtypes")
-public class UI {
+public class MainInterface {
 
 	public JFrame mainFrame;
 	public static JComboBox comboBoxC1;
@@ -76,7 +76,7 @@ public class UI {
 	private JLabel lblSegundosC2;
 	private JLabel labelCanaisC1;
 
-	public UI() {
+	public MainInterface() {
 		initialize();
 	}
 

@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-public class Iniciar {
+public class Inicializador {
 
 	public static void main(String[] args) {
 
@@ -18,7 +18,7 @@ public class Iniciar {
 							break;
 						}
 					}
-					UI window = new UI();
+					MainInterface window = new MainInterface();
 					window.mainFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

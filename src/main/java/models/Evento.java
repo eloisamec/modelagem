@@ -2,6 +2,7 @@ package models;
 
 import models.enums.TipoEvento;
 
+@SuppressWarnings("rawtypes")
 public class Evento implements Comparable {
 
 	private int tempo;

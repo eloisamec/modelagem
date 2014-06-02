@@ -4,7 +4,7 @@ import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import utils.MathsUtils;
 import utils.Utils;
-import views.UI;
+import views.MainInterface;
 
 public class ChamadaController {
 
@@ -41,8 +41,8 @@ public class ChamadaController {
 	}
 
 	public static TipoChamada testaTipoChamadaC2(int celulaChegada) {
-		int probabilidadeC2C2 = Utils.filterByInteger(UI.textField_3.getText());
-		int probabilidadeC2C1 = Utils.filterByInteger(UI.textField_4.getText()) + probabilidadeC2C2;
+		int probabilidadeC2C2 = Utils.filterByInteger(MainInterface.textField_3.getText());
+		int probabilidadeC2C1 = Utils.filterByInteger(MainInterface.textField_4.getText()) + probabilidadeC2C2;
 
 		if (celulaChegada <= probabilidadeC2C2) {
 			return TipoChamada.C2C2;
@@ -54,8 +54,8 @@ public class ChamadaController {
 	}
 
 	public static TipoChamada testaTipoChamadaC1(int celulaChegada) {
-		int probabilidadeC1C1 = Utils.filterByInteger(UI.textField.getText());
-		int probabilidadeC1C2 = Utils.filterByInteger(UI.textField_1.getText()) + probabilidadeC1C1;
+		int probabilidadeC1C1 = Utils.filterByInteger(MainInterface.textField.getText());
+		int probabilidadeC1C2 = Utils.filterByInteger(MainInterface.textField_1.getText()) + probabilidadeC1C1;
 
 		if (celulaChegada <= probabilidadeC1C1) {
 			return TipoChamada.C1C1;
