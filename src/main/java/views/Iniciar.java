@@ -1,16 +1,12 @@
-package ModelagemESimulacao.Implementacao1;
+package views;
 
 import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import structure.Celula;
-import structure.EventoControl;
-import ui.UI;
+public class Iniciar {
 
-public class App {
-	
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -29,18 +25,6 @@ public class App {
 				}
 			}
 		});
-		
-		//get number of lines from ui
-		Celula c1 = new Celula("c1", 15);
-		Celula c2 = new Celula("c2", 30);
-		EventoControl eventoControl = new EventoControl(c1, c2);
-		
-		eventoControl.fillListaEventos();
-		
-		eventoControl.run();
-	
-		
-		
 
 	}
 }
