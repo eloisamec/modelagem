@@ -32,30 +32,17 @@ public class ChamadaController {
 		TipoChamada tipoChamada;
 
 		if (celulaPartida <= 50) {
-			tipoChamada = testaTipoChamadaC1(celulaChegada);
+			tipoChamada = getTipoChamadaC1(celulaChegada);
 		} else {
-			tipoChamada = testaTipoChamadaC2(celulaChegada);
+			tipoChamada = getTipoChamadaC2(celulaChegada);
 		}
 
 		return tipoChamada;
 	}
 
-	public static TipoChamada testaTipoChamadaC2(int celulaChegada) {
-		int probabilidadeC2C2 = Utils.filterByInteger(MainInterface.textField_3.getText());
-		int probabilidadeC2C1 = Utils.filterByInteger(MainInterface.textField_4.getText()) + probabilidadeC2C2;
-
-		if (celulaChegada <= probabilidadeC2C2) {
-			return TipoChamada.C2C2;
-		}
-		if (celulaChegada > probabilidadeC2C2 && celulaChegada <= probabilidadeC2C1) {
-			return TipoChamada.C2C1;
-		}
-		return TipoChamada.C2FA;
-	}
-
-	public static TipoChamada testaTipoChamadaC1(int celulaChegada) {
-		int probabilidadeC1C1 = Utils.filterByInteger(MainInterface.textField.getText());
-		int probabilidadeC1C2 = Utils.filterByInteger(MainInterface.textField_1.getText()) + probabilidadeC1C1;
+	public static TipoChamada getTipoChamadaC1(int celulaChegada) {
+		int probabilidadeC1C1 = Utils.filterByInteger(MainInterface.textFieldC1C1ProbValue.getText());
+		int probabilidadeC1C2 = Utils.filterByInteger(MainInterface.textFieldC1C2ProbValue.getText()) + probabilidadeC1C1;
 
 		if (celulaChegada <= probabilidadeC1C1) {
 			return TipoChamada.C1C1;
@@ -64,6 +51,19 @@ public class ChamadaController {
 			return TipoChamada.C1C2;
 		}
 		return TipoChamada.C1FA;
+	}
+
+	public static TipoChamada getTipoChamadaC2(int celulaChegada) {
+		int probabilidadeC2C2 = Utils.filterByInteger(MainInterface.textFieldC2C2ProbValue.getText());
+		int probabilidadeC2C1 = Utils.filterByInteger(MainInterface.textFieldC2C1ProbValue.getText()) + probabilidadeC2C2;
+
+		if (celulaChegada <= probabilidadeC2C2) {
+			return TipoChamada.C2C2;
+		}
+		if (celulaChegada > probabilidadeC2C2 && celulaChegada <= probabilidadeC2C1) {
+			return TipoChamada.C2C1;
+		}
+		return TipoChamada.C2FA;
 	}
 
 }

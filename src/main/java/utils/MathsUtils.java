@@ -9,7 +9,7 @@ public class MathsUtils {
 	public static int Expo(int lambda) {
 		double r = Rand();
 		double x = (-lambda) * (Math.log(1 - r));
-
+		System.out.println(x);
 		return (int) x;
 	}
 

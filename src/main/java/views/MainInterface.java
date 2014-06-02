@@ -36,12 +36,12 @@ public class MainInterface {
 	public JFrame mainFrame;
 	public static JComboBox comboBoxC1;
 	public static JComboBox comboBoxC2;
-	public static JTextField textField;
-	public static JTextField textField_1;
-	public static JTextField textField_2;
-	public static JTextField textField_3;
-	public static JTextField textField_4;
-	public static JTextField textField_5;
+	public static JTextField textFieldC1C1ProbValue;
+	public static JTextField textFieldC1C2ProbValue;
+	public static JTextField textFieldC1FAProbValue;
+	public static JTextField textFieldC2C2ProbValue;
+	public static JTextField textFieldC2C1ProbValue;
+	public static JTextField textFieldC2FAProbValue;
 	public static JTextField textFieldCanaisC1;
 	public static JTextField textFieldCanaisC2;
 	public static JTextField textFieldExpoC2;
@@ -55,7 +55,7 @@ public class MainInterface {
 	public static JTextField textFieldDuracaoSimulacao;
 	public static JTextArea textAreaResultado;
 	public static JButton buttonAnalisarSimulaoSelecionada;
-	public static JList listaEventos;
+	public static JList listaSimulacoesScrollPane;
 	public static DecimalFormat formaterDecimal = new DecimalFormat("#.####");
 	public static DecimalFormat formaterDecimalIteracoes = new DecimalFormat();
 	public static JLabel labelIteracoes;
@@ -100,8 +100,8 @@ public class MainInterface {
 			public void actionPerformed(ActionEvent arg0) {
 				if ((JOptionPane.showConfirmDialog(null, "Iniciar nova sess\u00E3o?", "Iniciar", 1)) == 0) {
 					// eventos = new ArrayList<Evento>();
-					listaEventos.clearSelection();
-					listaEventos.updateUI();
+					listaSimulacoesScrollPane.clearSelection();
+					listaSimulacoesScrollPane.updateUI();
 					textAreaResultado.setText("");
 					// Simulador.numeroTotalIteracoes = 0;
 					// Simulador.id = 1;
@@ -161,12 +161,12 @@ public class MainInterface {
 		scrollPane.setBounds(10, 22, 601, 162);
 		panelDados.add(scrollPane);
 
-		listaEventos = new JList();
-		listaEventos.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		scrollPane.setViewportView(listaEventos);
+		listaSimulacoesScrollPane = new JList();
+		listaSimulacoesScrollPane.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		scrollPane.setViewportView(listaSimulacoesScrollPane);
 
-		listaEventos.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		listaEventos.setModel(new javax.swing.AbstractListModel() {
+		listaSimulacoesScrollPane.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		listaSimulacoesScrollPane.setModel(new javax.swing.AbstractListModel() {
 			private static final long serialVersionUID = 1L;
 
 			public int getSize() {
@@ -188,12 +188,12 @@ public class MainInterface {
 		final JButton buttonPausarSimulacao = new JButton("Pausar Simulação!");
 		buttonPausarSimulacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Simulador.paused) {
-					Simulador.paused = false;
+				if (Simulador.pausado) {
+					Simulador.pausado = false;
 					buttonPausarSimulacao.setText("Pausar");
 					buttonPausarSimulacao.setForeground(Color.RED);
 				} else {
-					Simulador.paused = true;
+					Simulador.pausado = true;
 					buttonPausarSimulacao.setText("Continuar");
 					buttonPausarSimulacao.setForeground(Color.GREEN);
 				}
@@ -554,26 +554,26 @@ public class MainInterface {
 		lblCFa.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCFa.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_2.setBounds(68, 71, 48, 20);
-		panel_7.add(textField_2);
-		textField_2.setText("20");
-		textField_2.setColumns(10);
+		textFieldC1FAProbValue = new JTextField();
+		textFieldC1FAProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC1FAProbValue.setBounds(68, 71, 48, 20);
+		panel_7.add(textFieldC1FAProbValue);
+		textFieldC1FAProbValue.setText("20");
+		textFieldC1FAProbValue.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_1.setBounds(68, 46, 48, 20);
-		panel_7.add(textField_1);
-		textField_1.setText("30");
-		textField_1.setColumns(10);
+		textFieldC1C2ProbValue = new JTextField();
+		textFieldC1C2ProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC1C2ProbValue.setBounds(68, 46, 48, 20);
+		panel_7.add(textFieldC1C2ProbValue);
+		textFieldC1C2ProbValue.setText("30");
+		textFieldC1C2ProbValue.setColumns(10);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField.setBounds(68, 21, 48, 20);
-		panel_7.add(textField);
-		textField.setText("50");
-		textField.setColumns(10);
+		textFieldC1C1ProbValue = new JTextField();
+		textFieldC1C1ProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC1C1ProbValue.setBounds(68, 21, 48, 20);
+		panel_7.add(textFieldC1C1ProbValue);
+		textFieldC1C1ProbValue.setText("50");
+		textFieldC1C1ProbValue.setColumns(10);
 
 		JLabel label = new JLabel("%");
 		label.setBounds(121, 24, 11, 14);
@@ -619,26 +619,26 @@ public class MainInterface {
 		lblCFa_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCFa_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_3.setBounds(68, 20, 48, 20);
-		panel_8.add(textField_3);
-		textField_3.setText("50");
-		textField_3.setColumns(10);
+		textFieldC2C2ProbValue = new JTextField();
+		textFieldC2C2ProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC2C2ProbValue.setBounds(68, 20, 48, 20);
+		panel_8.add(textFieldC2C2ProbValue);
+		textFieldC2C2ProbValue.setText("50");
+		textFieldC2C2ProbValue.setColumns(10);
 
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_4.setBounds(68, 45, 48, 20);
-		panel_8.add(textField_4);
-		textField_4.setText("30");
-		textField_4.setColumns(10);
+		textFieldC2C1ProbValue = new JTextField();
+		textFieldC2C1ProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC2C1ProbValue.setBounds(68, 45, 48, 20);
+		panel_8.add(textFieldC2C1ProbValue);
+		textFieldC2C1ProbValue.setText("30");
+		textFieldC2C1ProbValue.setColumns(10);
 
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_5.setBounds(68, 70, 48, 20);
-		panel_8.add(textField_5);
-		textField_5.setText("20");
-		textField_5.setColumns(10);
+		textFieldC2FAProbValue = new JTextField();
+		textFieldC2FAProbValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		textFieldC2FAProbValue.setBounds(68, 70, 48, 20);
+		panel_8.add(textFieldC2FAProbValue);
+		textFieldC2FAProbValue.setText("20");
+		textFieldC2FAProbValue.setColumns(10);
 
 		JLabel label_5 = new JLabel("%");
 		label_5.setBounds(121, 73, 11, 14);
@@ -708,7 +708,7 @@ public class MainInterface {
 		panel_4.add(buttonGerarGraficoDistancia);
 		buttonGerarGraficoDistancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = listaEventos.getSelectedIndex();
+				int index = listaSimulacoesScrollPane.getSelectedIndex();
 				if (index == -1)
 					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
 				// else {

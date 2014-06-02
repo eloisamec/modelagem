@@ -2,87 +2,78 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import models.Celula;
-import models.Evento;
 import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
-import models.enums.TipoEvento;
+import models.generic.Evento;
 import utils.Statistics;
 import utils.Utils;
 import views.MainInterface;
 
 public class Simulador implements Runnable {
 
-	private static int tempoAtual = 0;
+	private static int tempoAtual;
 	private static ArrayList<Evento> eventos;
-	private Celula c1;
-	private Celula c2;
-	private static int aC1 = Utils.filterByInteger(MainInterface.textFieldMinC1.getText());
-	private static int bC1 = Utils.filterByInteger(MainInterface.textFieldMedC1.getText());
-	private static int cC1 = Utils.filterByInteger(MainInterface.textFieldMaxC1.getText());
+	private static Celula celula1;
+	private static Celula celula2;
+	private static int aC1;
+	private static int bC1;
+	private static int cC1;
+	private static int aC2;
+	private static int bC2;
+	private static int cC2;
 	private static TipoDuracao tipoDuracaoC1;
-	private static int aC2 = Utils.filterByInteger(MainInterface.textFieldMinC2.getText());
-	private static int bC2 = Utils.filterByInteger(MainInterface.textFieldMedC2.getText());
-	private static int cC2 = Utils.filterByInteger(MainInterface.textFieldMaxC2.getText());
 	private static TipoDuracao tipoDuracaoC2;
-	public static boolean paused = false;
+	public static boolean pausado;
+	public static boolean rodando;
+	public static int duracaoExecucao;
 
-	@SuppressWarnings("unchecked")
 	public static void init() {
+		// Atributos de controle; // TODO Poderia talvez criar um override pra
+		// lista ordenar no add =]
 		eventos = new ArrayList<Evento>();
+		tempoAtual = 0;
+		pausado = false;
+		duracaoExecucao = Integer.parseInt(MainInterface.textFieldDuracaoSimulacao.getText()) * 60;
+		rodando = true;
 
+		// Criação das células;
+		celula1 = new Celula(Integer.parseInt(MainInterface.textFieldCanaisC1.getText()));
+		celula2 = new Celula(Integer.parseInt(MainInterface.textFieldCanaisC2.getText()));
+
+		// TODO Comment -> Parâmetros; Escohler noem decentes;
+		aC1 = Utils.filterByInteger(MainInterface.textFieldMinC1.getText());
+		bC1 = Utils.filterByInteger(MainInterface.textFieldMedC1.getText());
+		cC1 = Utils.filterByInteger(MainInterface.textFieldMaxC1.getText());
+		aC2 = Utils.filterByInteger(MainInterface.textFieldMinC2.getText());
+		bC2 = Utils.filterByInteger(MainInterface.textFieldMedC2.getText());
+		cC2 = Utils.filterByInteger(MainInterface.textFieldMaxC2.getText());
+
+		// Tipos da duração das células 1 e 2;
 		String nomeTipoDuracaoC1 = MainInterface.comboBoxC1.getSelectedItem().toString();
 		String nomeTipoDuracaoC2 = MainInterface.comboBoxC2.getSelectedItem().toString();
 		tipoDuracaoC1 = TipoDuracao.get(nomeTipoDuracaoC1);
 		tipoDuracaoC2 = TipoDuracao.get(nomeTipoDuracaoC2);
 
-		TipoChamada tipoChamada = ChamadaController.testaTipoChamadaC1((int) Math.random() * 100);
-		getNovoEvento(tipoChamada);
-		ChamadaController.testaTipoChamadaC2((int) Math.random() * 100);
-		getNovoEvento(tipoChamada);
+		// Cria dois novos eventos de chegada, um para cada célula;
+		TipoChamada tipoChamadaC1 = ChamadaController.getTipoChamadaC1((int) Math.random() * 100);
+		List<Evento> novosEventosC1 = EventoController.criarNovosEventosC1(tipoChamadaC1, tempoAtual, tipoDuracaoC1);
 
+		TipoChamada tipoChamadaC2 = ChamadaController.getTipoChamadaC2((int) Math.random() * 100);
+		List<Evento> novosEventosC2 = EventoController.criarNovosEventosC2(tipoChamadaC2, tempoAtual, tipoDuracaoC2);
+
+		eventos.addAll(novosEventosC1);
+		eventos.addAll(novosEventosC2);
 		Collections.sort(eventos);
 	}
 
-	private static void getNovoEvento(TipoChamada tipoChamada) {
-		if (tipoChamada.toString().startsWith("C1")) {
-			Evento eventoChegada = EventoController.getNovaChegada(Utils.filterByInteger(MainInterface.textFieldExpoC1.getText()), tipoDuracaoC1, aC1,
-					bC1, cC1, tempoAtual);
-			eventos.add(eventoChegada);
-			if (!tipoChamada.equals(TipoChamada.C1FA)) {
-				Evento eventoSaida = EventoController.getNovaSaida(eventoChegada);
-				eventos.add(eventoSaida);
-			}
-			if (tipoChamada.equals(TipoChamada.C1C2) || tipoChamada.equals(TipoChamada.C1FA)) {
-				Evento eventoTroca = EventoController.getNovaTroca(eventoChegada);
-				eventos.add(eventoTroca);
-			}
-		} else {
-			Evento eventoChegada = EventoController.getNovaChegada(Utils.filterByInteger(MainInterface.textFieldExpoC2.getText()), tipoDuracaoC2, aC2,
-					bC2, cC2, tempoAtual);
-			eventos.add(eventoChegada);
-			if (!tipoChamada.equals(TipoChamada.C2FA)) {
-				Evento eventoSaida = EventoController.getNovaSaida(eventoChegada);
-				eventos.add(eventoSaida);
-			}
-			if (tipoChamada.equals(TipoChamada.C2FA) || tipoChamada.equals(TipoChamada.C2C1)) {
-				Evento eventoTroca = EventoController.getNovaTroca(eventoChegada);
-				eventos.add(eventoTroca);
-			}
-		}
-	}
-
 	public void run() {
-		c1 = new Celula(Integer.parseInt(MainInterface.textFieldCanaisC1.getText()));
-		c2 = new Celula(Integer.parseInt(MainInterface.textFieldCanaisC2.getText()));
-		int duracaoExecucao = Integer.parseInt(MainInterface.textFieldDuracaoSimulacao.getText()) * 60;
-		boolean isRunning = true;
-
 		init();
 
-		while (isRunning) {
-			if (paused) {
+		while (rodando) {
+			if (pausado) {
 				try {
 					Thread.sleep(15);
 				} catch (InterruptedException e) {
@@ -128,14 +119,14 @@ public class Simulador implements Runnable {
 					}
 				}
 				if (novoEventoC1) {
-					getNovoEvento(ChamadaController.testaTipoChamadaC1((int) Math.random() * 100));
+					criarNovosEventosC1(ChamadaController.getTipoChamadaC1((int) Math.random() * 100));
 				}
 				if (novoEventoC2) {
-					getNovoEvento(ChamadaController.testaTipoChamadaC2((int) Math.random() * 100));
+					criarNovosEventosC1(ChamadaController.getTipoChamadaC2((int) Math.random() * 100));
 				}
 
 				if (tempoAtual > duracaoExecucao) {
-					isRunning = false;
+					rodando = false;
 				}
 			}
 		}
@@ -143,35 +134,35 @@ public class Simulador implements Runnable {
 
 	private void setEventoTroca(int eventoId, TipoEvento tipoEvento, TipoChamada tipoChamada) {
 		if (tipoChamada.name().equalsIgnoreCase("C1C2")) {
-			c1.setCanais(c1.getCanais() + 1);
-			if (c2.getCanais() > 0) {
-				c2.setCanais(c2.getCanais() - 1);
+			celula1.setCanais(celula1.getCanais() + 1);
+			if (celula2.getCanais() > 0) {
+				celula2.setCanais(celula2.getCanais() - 1);
 			} else {
 				removeEventoById(eventoId);
 				Statistics.getNrChamadasPerdidasC2();
 			}
 		} else if (tipoChamada.name().equalsIgnoreCase("C2C1")) {
-			c2.setCanais(c2.getCanais() + 1);
-			if (c1.getCanais() > 0) {
-				c1.setCanais(c1.getCanais() - 1);
+			celula2.setCanais(celula2.getCanais() + 1);
+			if (celula1.getCanais() > 0) {
+				celula1.setCanais(celula1.getCanais() - 1);
 			} else {
 				removeEventoById(eventoId);
 				Statistics.increaseNrChamadasPerdidasC1();
 			}
 		} else if (tipoChamada.name().equalsIgnoreCase("C1FA")) {
-			c1.setCanais(c1.getCanais() + 1);
+			celula1.setCanais(celula1.getCanais() + 1);
 			Statistics.increaseNrChamadasPerdidasFA();
 		} else if (tipoChamada.name().equalsIgnoreCase("C2FA")) {
-			c2.setCanais(c2.getCanais() + 1);
+			celula2.setCanais(celula2.getCanais() + 1);
 			Statistics.increaseNrChamadasPerdidasFA();
 		}
 	}
 
 	private void setEventoSaida(int eventoId, TipoEvento tipoEvento, TipoChamada tipoChamada) {
 		if (tipoChamada.name().startsWith("C1")) {
-			c1.setCanais(c1.getCanais() + 1);
+			celula1.setCanais(celula1.getCanais() + 1);
 		} else {
-			c2.setCanais(c2.getCanais() + 1);
+			celula2.setCanais(celula2.getCanais() + 1);
 		}
 		Statistics.increaseNrChamadasFinalizadas();
 	}
@@ -189,16 +180,16 @@ public class Simulador implements Runnable {
 
 	public void setEventoChegada(int eventoId, TipoEvento tipoEvento, TipoChamada tipoChamada) {
 		if (tipoChamada.name().startsWith("C1")) {
-			if (c1.getCanais() > 0) {
-				c1.setCanais(c1.getCanais() - 1);
+			if (celula1.getCanais() > 0) {
+				celula1.setCanais(celula1.getCanais() - 1);
 				Statistics.increaseNrChamadasChegandoNoSistema();
 			} else {
 				removeEventoById(eventoId);
 				Statistics.increaseNrChamadasPerdidasC1();
 			}
 		} else {
-			if (c2.getCanais() > 0) {
-				c2.setCanais(c2.getCanais() - 1);
+			if (celula2.getCanais() > 0) {
+				celula2.setCanais(celula2.getCanais() - 1);
 				Statistics.increaseNrChamadasChegandoNoSistema();
 			} else {
 				removeEventoById(eventoId);
