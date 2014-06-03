@@ -60,7 +60,6 @@ public class MainInterface {
 	public static JList listaSimulacoesScrollPane;
 	public static DecimalFormat formaterDecimal = new DecimalFormat("#.####");
 	public static DecimalFormat formaterDecimalIteracoes = new DecimalFormat();
-	public static JLabel labelPasso;
 
 	static JButton buttonGerarGraficoDistancia;
 
@@ -108,7 +107,6 @@ public class MainInterface {
 					textAreaResultado.setText("");
 					// Simulador.numeroTotalIteracoes = 0;
 					// Simulador.id = 1;
-					labelPasso.setText("0/2.000.000 itera\u00E7\u00F5es.");
 				}
 			}
 		});
@@ -148,7 +146,7 @@ public class MainInterface {
 		panel.add(scrollPaneTextArea);
 
 		textAreaResultado = new JTextArea();
-		DefaultCaret caret = (DefaultCaret)textAreaResultado.getCaret();
+		DefaultCaret caret = (DefaultCaret) textAreaResultado.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		textAreaResultado.setForeground(new Color(0, 0, 205));
 		textAreaResultado.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -163,7 +161,7 @@ public class MainInterface {
 		panelDados.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(10, 22, 601, 162);
+		scrollPane.setBounds(10, 22, 601, 130);
 		panelDados.add(scrollPane);
 
 		listaSimulacoesScrollPane = new JList();
@@ -184,66 +182,27 @@ public class MainInterface {
 		});
 
 		JPanel panelSimulacoes = new JPanel();
-		panelSimulacoes.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Simula\u00E7\u00F5es",
+		panelSimulacoes.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Configura\u00E7\u00F5es",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelSimulacoes.setBounds(10, 285, 601, 295);
+		panelSimulacoes.setBounds(10, 253, 601, 327);
 		panelDados.add(panelSimulacoes);
 		panelSimulacoes.setLayout(null);
 
-		final JButton buttonPausarSimulacao = new JButton("Pausar Simulação!");
-		buttonPausarSimulacao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (Simulador.pausado) {
-					Simulador.pausado = false;
-					buttonPausarSimulacao.setText("Pausar");
-					buttonPausarSimulacao.setForeground(Color.RED);
-				} else {
-					Simulador.pausado = true;
-					buttonPausarSimulacao.setText("Continuar");
-					buttonPausarSimulacao.setForeground(Color.GREEN);
-				}
-			}
-		});
-		buttonPausarSimulacao.setForeground(Color.RED);
-		buttonPausarSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		buttonPausarSimulacao.setBounds(424, 11, 119, 23);
-		buttonPausarSimulacao.setEnabled(false);
-		panelSimulacoes.add(buttonPausarSimulacao);
-
-		final JButton buttonSimulacao = new JButton("Criar Nova Simula\u00E7\u00E3o com os Seguintes Par\u00E2metros:");
-		buttonSimulacao.setBounds(112, 11, 289, 23);
-		panelSimulacoes.add(buttonSimulacao);
-		buttonSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		buttonSimulacao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				simulador = new Thread(new Simulador());
-				simulador.start();
-				buttonPausarSimulacao.setEnabled(true);
-			}
-		});
-		buttonSimulacao.setForeground(new Color(0, 100, 0));
-
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 48, 48, 14);
+		lblNome.setBounds(10, 215, 31, 14);
 		panelSimulacoes.add(lblNome);
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		textFieldNome = new JTextField();
-		textFieldNome.setBounds(68, 45, 124, 20);
+		textFieldNome.setBounds(51, 212, 124, 20);
 		panelSimulacoes.add(textFieldNome);
 		textFieldNome.setText("Simula\u00E7\u00E3o 1");
 		textFieldNome.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldNome.setColumns(10);
 
-		labelPasso = new JLabel("Passo 0");
-		labelPasso.setBounds(218, 263, 202, 14);
-		panelSimulacoes.add(labelPasso);
-		labelPasso.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		labelPasso.setHorizontalAlignment(SwingConstants.CENTER);
-
 		panelCelula1 = new JPanel();
-		panelCelula1.setBounds(10, 68, 202, 184);
+		panelCelula1.setBounds(10, 20, 202, 184);
 		panelSimulacoes.add(panelCelula1);
 		panelCelula1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "C\u00E9lula 1", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
@@ -387,7 +346,7 @@ public class MainInterface {
 		});
 
 		panelCelula2 = new JPanel();
-		panelCelula2.setBounds(218, 68, 202, 184);
+		panelCelula2.setBounds(218, 20, 202, 184);
 		panelSimulacoes.add(panelCelula2);
 		panelCelula2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "C\u00E9lula 2", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
@@ -529,7 +488,7 @@ public class MainInterface {
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Probabilidades", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		panel_5.setBounds(423, 45, 168, 239);
+		panel_5.setBounds(423, 20, 168, 239);
 		panelSimulacoes.add(panel_5);
 		panel_5.setLayout(null);
 
@@ -666,48 +625,65 @@ public class MainInterface {
 		JLabel labelDuracaoSimulacao = new JLabel("Duração:");
 		labelDuracaoSimulacao.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelDuracaoSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		labelDuracaoSimulacao.setBounds(231, 48, 44, 14);
+		labelDuracaoSimulacao.setBounds(228, 215, 44, 14);
 		panelSimulacoes.add(labelDuracaoSimulacao);
 
 		textFieldDuracaoSimulacao = new JTextField();
 		textFieldDuracaoSimulacao.setText("30");
 		textFieldDuracaoSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldDuracaoSimulacao.setColumns(10);
-		textFieldDuracaoSimulacao.setBounds(289, 45, 70, 20);
+		textFieldDuracaoSimulacao.setBounds(282, 212, 70, 20);
 		panelSimulacoes.add(textFieldDuracaoSimulacao);
 
 		JLabel lblMinutos = new JLabel("minutos");
 		lblMinutos.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblMinutos.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMinutos.setBounds(362, 48, 37, 14);
+		lblMinutos.setBounds(362, 215, 37, 14);
 		panelSimulacoes.add(lblMinutos);
-		
+
 		sliderVelocidadePasso = new JSlider();
-		sliderVelocidadePasso.setMajorTickSpacing(8);
-		sliderVelocidadePasso.setMinorTickSpacing(8);
-		sliderVelocidadePasso.setMaximum(2000);
-		sliderVelocidadePasso.setMinimum(50);
+		sliderVelocidadePasso.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		sliderVelocidadePasso.setMajorTickSpacing(200);
+		sliderVelocidadePasso.setMaximum(2020);
+		sliderVelocidadePasso.setMinimum(20);
 		sliderVelocidadePasso.setSnapToTicks(true);
 		sliderVelocidadePasso.setPaintTicks(true);
 		sliderVelocidadePasso.setPaintLabels(true);
-		sliderVelocidadePasso.setBounds(10, 250, 200, 34);
+		sliderVelocidadePasso.setBounds(20, 263, 389, 45);
 		panelSimulacoes.add(sliderVelocidadePasso);
+
+		JLabel sliderLabel = new JLabel("Velocidade de execução por passo (ms):");
+		sliderLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		sliderLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		sliderLabel.setBounds(20, 245, 193, 14);
+		panelSimulacoes.add(sliderLabel);
+
+		JButton buttonFastForward = new JButton("Acelerar Passos (0 ms)");
+		buttonFastForward.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Simulador.fastForward = true;
+			}
+		});
+		buttonFastForward.setForeground(new Color(210, 105, 30));
+		buttonFastForward.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonFastForward.setBounds(433, 275, 144, 23);
+		panelSimulacoes.add(buttonFastForward);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Edi\u00E7\u00E3o e An\u00E1lise",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(10, 195, 296, 91);
+		panel_3.setBounds(10, 163, 204, 91);
 		panelDados.add(panel_3);
 		panel_3.setLayout(null);
 
 		buttonAnalisarSimulaoSelecionada = new JButton("Analisar Simula\u00E7\u00E3o Selecionada");
-		buttonAnalisarSimulaoSelecionada.setBounds(10, 21, 276, 23);
+		buttonAnalisarSimulaoSelecionada.setBounds(10, 21, 181, 23);
 		panel_3.add(buttonAnalisarSimulaoSelecionada);
 		buttonAnalisarSimulaoSelecionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		buttonAnalisarSimulaoSelecionada.setForeground(Color.BLUE);
 
 		buttonExcluirSimulacaoSelecionada = new JButton("Excluir Simula\u00E7\u00E3o Selecionada");
-		buttonExcluirSimulacaoSelecionada.setBounds(10, 55, 276, 23);
+		buttonExcluirSimulacaoSelecionada.setBounds(10, 55, 181, 23);
 		panel_3.add(buttonExcluirSimulacaoSelecionada);
 		buttonExcluirSimulacaoSelecionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		buttonExcluirSimulacaoSelecionada.setForeground(Color.BLUE);
@@ -715,12 +691,19 @@ public class MainInterface {
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Gr\u00E1ficos e Estat\u00EDsticas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(316, 195, 296, 91);
+		panel_4.setBounds(215, 163, 204, 91);
 		panelDados.add(panel_4);
 		panel_4.setLayout(null);
 
+		buttonGerarEstatisticas = new JButton("Gerar Estatísticas");
+		buttonGerarEstatisticas.setBounds(10, 55, 181, 23);
+		panel_4.add(buttonGerarEstatisticas);
+		buttonGerarEstatisticas.setName("Gerar Estat\u00EDsticas");
+		buttonGerarEstatisticas.setForeground(new Color(128, 0, 0));
+		buttonGerarEstatisticas.setFont(new Font("Tahoma", Font.PLAIN, 11));
+
 		buttonGerarGraficoDistancia = new JButton("Gerar Gráfico");
-		buttonGerarGraficoDistancia.setBounds(10, 21, 275, 23);
+		buttonGerarGraficoDistancia.setBounds(10, 21, 181, 23);
 		panel_4.add(buttonGerarGraficoDistancia);
 		buttonGerarGraficoDistancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -736,12 +719,46 @@ public class MainInterface {
 		buttonGerarGraficoDistancia.setForeground(new Color(128, 0, 0));
 		buttonGerarGraficoDistancia.setName("Create GR");
 
-		buttonGerarEstatisticas = new JButton("Gerar Estatísticas");
-		buttonGerarEstatisticas.setBounds(10, 55, 275, 23);
-		panel_4.add(buttonGerarEstatisticas);
-		buttonGerarEstatisticas.setName("Gerar Estat\u00EDsticas");
-		buttonGerarEstatisticas.setForeground(new Color(128, 0, 0));
-		buttonGerarEstatisticas.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Gr\u00E1ficos e Estat\u00EDsticas",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(420, 163, 191, 91);
+		panelDados.add(panel_1);
+
+		final JButton buttonPausarSimulacao = new JButton("Pausar Simulação!");
+		buttonPausarSimulacao.setBounds(10, 55, 171, 23);
+		panel_1.add(buttonPausarSimulacao);
+		buttonPausarSimulacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Simulador.pausado) {
+					Simulador.pausado = false;
+					buttonPausarSimulacao.setText("Pausar");
+					buttonPausarSimulacao.setForeground(Color.RED);
+				} else {
+					Simulador.pausado = true;
+					buttonPausarSimulacao.setText("Continuar");
+					buttonPausarSimulacao.setForeground(Color.GREEN);
+				}
+			}
+		});
+		buttonPausarSimulacao.setForeground(Color.RED);
+		buttonPausarSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonPausarSimulacao.setEnabled(false);
+		
+		final JButton buttonSimulacao = new JButton("Criar Nova Simulação");
+		buttonSimulacao.setBounds(10, 23, 171, 23);
+		panel_1.add(buttonSimulacao);
+		buttonSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonSimulacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				simulador = new Thread(new Simulador());
+				simulador.start();
+				buttonPausarSimulacao.setEnabled(true);
+			}
+		});
+		buttonSimulacao.setForeground(new Color(0, 100, 0));
+
 		buttonGerarEstatisticas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// if (simulacoes.size() <= 1)

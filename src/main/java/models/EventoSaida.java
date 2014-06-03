@@ -11,6 +11,11 @@ public class EventoSaida extends Evento {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "Saída <ID: " + id + "; Tempo chegada: " + tempoChegada + ">";
+	}
+
 	public int getId() {
 		return id;
 	}

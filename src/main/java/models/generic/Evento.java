@@ -4,7 +4,7 @@ import models.Chamada;
 
 public abstract class Evento implements Comparable<Evento> {
 
-	private int tempoChegada;
+	protected int tempoChegada;
 	private Chamada chamada;
 	protected static int id = 0;
 

@@ -13,6 +13,11 @@ public class EventoTroca extends Evento {
 		this.tempoTroca = tempoTroca;
 	}
 
+	@Override
+	public String toString() {
+		return "Troca <ID: " + id + "; Tempo troca: " + tempoTroca + ">";
+	}
+
 	public int getTempoTroca() {
 		return tempoTroca;
 	}

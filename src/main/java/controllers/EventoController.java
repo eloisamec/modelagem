@@ -159,7 +159,7 @@ public class EventoController {
 
 	private static EventoTroca getNovaTroca(EventoChegada eventoChegada) {
 		Chamada chamada = eventoChegada.getChamada();
-		int tempoTroca = (eventoChegada.getTempo() + chamada.getDuracao()) / 2;
+		int tempoTroca = eventoChegada.getTempo() + (chamada.getDuracao() / 2);
 
 		EventoTroca eventoTroca = new EventoTroca(tempoTroca, chamada, eventoChegada.getIdChegada());
 

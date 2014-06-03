@@ -44,7 +44,7 @@ public class ChamadaController {
 			break;
 		}
 
-		return duracaoChamada;
+		return duracaoChamada > 0 ? duracaoChamada : 1;
 	}
 
 	private static int getDuracaoConstante(int tipoCelula) {

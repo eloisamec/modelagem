@@ -22,6 +22,7 @@ public class Simulador implements Runnable {
 	public static boolean pausado;
 	public static boolean rodando;
 	public static int duracaoExecucao;
+	public static boolean fastForward;
 
 	public static void init() {
 		// Atributos de controle; // TODO Poderia talvez criar um override pra
@@ -31,6 +32,7 @@ public class Simulador implements Runnable {
 		pausado = false;
 		duracaoExecucao = Integer.parseInt(MainInterface.textFieldDuracaoSimulacao.getText()) * 60;
 		rodando = true;
+		fastForward = false;
 
 		// Criação das células;
 		EventoController.setCelula1(new Celula(Integer.parseInt(MainInterface.textFieldCanaisC1.getText())));
@@ -63,11 +65,13 @@ public class Simulador implements Runnable {
 					continue;
 				}
 			} else { // Próximo passo da Simulação;
-				try {
-					long sleepTime = MainInterface.sliderVelocidadePasso.getValue();
-					Thread.sleep(sleepTime);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				if (!fastForward) {
+					try {
+						long sleepTime = MainInterface.sliderVelocidadePasso.getValue();
+						Thread.sleep(sleepTime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 
 				// Incrementa o passo atual;

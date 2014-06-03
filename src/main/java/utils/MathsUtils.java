@@ -9,8 +9,9 @@ public class MathsUtils {
 	public static int expo(int lambda) {
 		double r = rand();
 		double x = (-lambda) * (Math.log(1 - r));
-		System.out.println(x);
-		return (int) x;
+
+		int valor = (int) x;
+		return normalizar(valor);
 	}
 
 	public static int normal(int a, int b) {
@@ -20,13 +21,15 @@ public class MathsUtils {
 		double z1 = Math.pow((-2 * Math.log(r1)), 0.5) * Math.cos(r2);
 		double x1 = b + (a * z1);
 
-		return (int) x1;
+		int valor = (int) x1;
+		return normalizar(valor);
 	}
 
 	public static int uniforme(int a, int b) {
 		double uniforme = a + ((b - a) * rand());
 
-		return (int) uniforme;
+		int valor = (int) uniforme;
+		return normalizar(valor);
 	}
 
 	public static int triangular(int a, int b, int c) {
@@ -40,7 +43,12 @@ public class MathsUtils {
 			x = c - (Math.sqrt((1 - random) * (c - b) * (c - a)));
 		}
 
-		return (int) x;
+		int valor = (int) x;
+		return normalizar(valor);
+	}
+
+	private static int normalizar(int valor) {
+		return valor > 0 ? valor : 1;
 	}
 
 }
