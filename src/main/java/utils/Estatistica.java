@@ -1,27 +1,49 @@
 package utils;
 
+import java.util.ArrayList;
+
 public class Estatistica {
 
-	// a
 	private int nrChamadasMinimoNoSistema = 0;
 	private int nrChamadasMedioNoSistema = 0;
 	private int nrChamadasMaximoNoSistema = 0;
-	// b
+
 	private int taxaOcupacaoCanaisC1 = 0;
 	private int taxaOcupacaoCanaisC2 = 0;
-	// c
+
 	private int tempoMinimoChamada = 0;
 	private int tempoMedioChamada = 0;
 	private int tempoMaximoChamada = 0;
-	// d
+
 	private int nrChamadasFinalizadas = 0;
-	// e
+
 	private int nrChamadasPerdidasC1 = 0;
 	private int nrChamadasPerdidasC2 = 0;
-	// f
+
 	private int nrChamadasPerdidasFA = 0;
 
+	private ArrayList<Integer> listaNumeroDeChamadasEstatistica = new ArrayList<Integer>();
+	private ArrayList<Integer> listaocupacaoC1Estatistica = new ArrayList<Integer>();
+	private ArrayList<Integer> listaocupacaoC2Estatistica = new ArrayList<Integer>();
+	private ArrayList<Integer> listaDuracaoChamadasEstatistica = new ArrayList<Integer>();
+
 	public Estatistica() {
+	}
+
+	public void addListaNumeroDeChamadasEstatistica(Integer num) {
+		listaNumeroDeChamadasEstatistica.add(num);
+	}
+
+	public void addListaocupacaoC1Estatistica(Integer num) {
+		listaocupacaoC1Estatistica.add(num);
+	}
+
+	public void addListaocupacaoC2Estatistica(Integer num) {
+		listaocupacaoC2Estatistica.add(num);
+	}
+
+	public void addListaDuracaoChamadasEstatistica(Integer num) {
+		listaDuracaoChamadasEstatistica.add(num);
 	}
 
 	public int getNrChamadasFinalizadas() {
@@ -134,5 +156,21 @@ public class Estatistica {
 
 	public void setTaxaOcupacaoCanaisC2(int taxaOcupacaoCanaisC2) {
 		this.taxaOcupacaoCanaisC2 = taxaOcupacaoCanaisC2;
+	}
+
+	public ArrayList<Integer> getListaNumeroDeChamadasEstatistica() {
+		return listaNumeroDeChamadasEstatistica;
+	}
+
+	public ArrayList<Integer> getListaocupacaoC1Estatistica() {
+		return listaocupacaoC1Estatistica;
+	}
+
+	public ArrayList<Integer> getListaocupacaoC2Estatistica() {
+		return listaocupacaoC2Estatistica;
+	}
+
+	public ArrayList<Integer> getListaDuracaoChamadasEstatistica() {
+		return listaDuracaoChamadasEstatistica;
 	}
 }

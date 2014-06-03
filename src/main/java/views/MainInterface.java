@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -30,6 +32,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 
+import models.Simulacao;
 import controllers.Simulador;
 
 @SuppressWarnings("rawtypes")
@@ -57,7 +60,7 @@ public class MainInterface {
 	public static JTextField textFieldDuracaoSimulacao;
 	public static JTextArea textAreaResultado;
 	public static JButton buttonAnalisarSimulaoSelecionada;
-	public static JList listaSimulacoesScrollPane;
+	public static JList listaSimulacoesComponent;
 	public static DecimalFormat formaterDecimal = new DecimalFormat("#.####");
 	public static DecimalFormat formaterDecimalIteracoes = new DecimalFormat();
 
@@ -76,9 +79,15 @@ public class MainInterface {
 	private JLabel lblSegundosC1;
 	private JLabel lblSegundosC2;
 	private JLabel labelCanaisC1;
+	public static JButton buttonPausarSimulacao;
+	public static JButton buttonSimulacao;
 	public static JSlider sliderVelocidadePasso;
 
+	private static ArrayList<Simulacao> simulacoes = new ArrayList<Simulacao>();
+	private static int id;
+
 	public MainInterface() {
+		id = 0;
 		initialize();
 	}
 
@@ -102,8 +111,8 @@ public class MainInterface {
 			public void actionPerformed(ActionEvent arg0) {
 				if ((JOptionPane.showConfirmDialog(null, "Iniciar nova sess\u00E3o?", "Iniciar", 1)) == 0) {
 					// eventos = new ArrayList<Evento>();
-					listaSimulacoesScrollPane.clearSelection();
-					listaSimulacoesScrollPane.updateUI();
+					listaSimulacoesComponent.clearSelection();
+					listaSimulacoesComponent.updateUI();
 					textAreaResultado.setText("");
 					// Simulador.numeroTotalIteracoes = 0;
 					// Simulador.id = 1;
@@ -164,20 +173,20 @@ public class MainInterface {
 		scrollPane.setBounds(10, 22, 601, 130);
 		panelDados.add(scrollPane);
 
-		listaSimulacoesScrollPane = new JList();
-		listaSimulacoesScrollPane.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		scrollPane.setViewportView(listaSimulacoesScrollPane);
+		listaSimulacoesComponent = new JList();
+		listaSimulacoesComponent.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		scrollPane.setViewportView(listaSimulacoesComponent);
 
-		listaSimulacoesScrollPane.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		listaSimulacoesScrollPane.setModel(new javax.swing.AbstractListModel() {
+		listaSimulacoesComponent.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		listaSimulacoesComponent.setModel(new javax.swing.AbstractListModel() {
 			private static final long serialVersionUID = 1L;
 
 			public int getSize() {
-				return 0;// simulacoes.size();
+				return simulacoes.size();
 			}
 
 			public Object getElementAt(int i) {
-				return 0;// simulacoes.get(i).toString();
+				return simulacoes.get(i).toString();
 			}
 		});
 
@@ -679,6 +688,18 @@ public class MainInterface {
 		buttonAnalisarSimulaoSelecionada = new JButton("Analisar Simula\u00E7\u00E3o Selecionada");
 		buttonAnalisarSimulaoSelecionada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int index = listaSimulacoesComponent.getSelectedIndex();
+				if (index == -1)
+					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
+				else {
+					Simulacao simulacao = (Simulacao) simulacoes.get(index);
+
+					String str = "";
+					for (String string : simulacao.getLog()) {
+						str += string + "\n";
+					}
+					textAreaResultado.setText(str);
+				}
 			}
 		});
 		buttonAnalisarSimulaoSelecionada.setBounds(10, 21, 181, 23);
@@ -687,6 +708,32 @@ public class MainInterface {
 		buttonAnalisarSimulaoSelecionada.setForeground(Color.BLUE);
 
 		buttonExcluirSimulacaoSelecionada = new JButton("Excluir Simula\u00E7\u00E3o Selecionada");
+		buttonExcluirSimulacaoSelecionada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = listaSimulacoesComponent.getSelectedIndex();
+				if (index == -1)
+					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
+				else {
+					int i = JOptionPane.showConfirmDialog(null, "Voc\u00EA deseja mesmo excluir as simula\u00E7\u00F5es selecionadas?");
+					if (i == 0) {
+						List names = MainInterface.listaSimulacoesComponent.getSelectedValuesList();
+
+						for (int k = 0; k < names.size(); k++) {
+							for (int j = 0; j < MainInterface.simulacoes.size(); j++) {
+								if (MainInterface.simulacoes.get(j).toString().equals(names.get(k))) {
+									MainInterface.simulacoes.remove(MainInterface.simulacoes.indexOf(simulacoes.get(j)));
+									break;
+								}
+							}
+						}
+
+						MainInterface.listaSimulacoesComponent.clearSelection();
+						MainInterface.listaSimulacoesComponent.updateUI();
+						textAreaResultado.setText("");
+					}
+				}
+			}
+		});
 		buttonExcluirSimulacaoSelecionada.setBounds(10, 55, 181, 23);
 		panel_3.add(buttonExcluirSimulacaoSelecionada);
 		buttonExcluirSimulacaoSelecionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -711,7 +758,7 @@ public class MainInterface {
 		panel_4.add(buttonGerarGraficoDistancia);
 		buttonGerarGraficoDistancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = listaSimulacoesScrollPane.getSelectedIndex();
+				int index = listaSimulacoesComponent.getSelectedIndex();
 				if (index == -1)
 					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
 				// else {
@@ -730,7 +777,7 @@ public class MainInterface {
 		panel_1.setBounds(420, 163, 191, 91);
 		panelDados.add(panel_1);
 
-		final JButton buttonPausarSimulacao = new JButton("Pausar Simulação!");
+		buttonPausarSimulacao = new JButton("Pausar Simulação!");
 		buttonPausarSimulacao.setBounds(10, 55, 171, 23);
 		panel_1.add(buttonPausarSimulacao);
 		buttonPausarSimulacao.addActionListener(new ActionListener() {
@@ -749,16 +796,23 @@ public class MainInterface {
 		buttonPausarSimulacao.setForeground(Color.RED);
 		buttonPausarSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		buttonPausarSimulacao.setEnabled(false);
-		
-		final JButton buttonSimulacao = new JButton("Criar Nova Simulação");
+
+		buttonSimulacao = new JButton("Criar Nova Simulação");
 		buttonSimulacao.setBounds(10, 23, 171, 23);
 		panel_1.add(buttonSimulacao);
 		buttonSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		buttonSimulacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Simulacao simulacao = new Simulacao(textFieldNome.getText(), id++);
+				simulacoes.add(simulacao);
+				listaSimulacoesComponent.updateUI();
+
+				Simulador.init(simulacao);
 				simulador = new Thread(new Simulador());
+				textAreaResultado.setText("");
 				simulador.start();
 				buttonPausarSimulacao.setEnabled(true);
+				buttonSimulacao.setEnabled(false);
 			}
 		});
 		buttonSimulacao.setForeground(new Color(0, 100, 0));

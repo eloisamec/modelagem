@@ -8,6 +8,7 @@ import models.Celula;
 import models.EventoChegada;
 import models.EventoSaida;
 import models.EventoTroca;
+import models.Simulacao;
 import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import models.generic.Evento;
@@ -18,7 +19,6 @@ public class Simulador implements Runnable {
 
 	private static int tempoAtual;
 	public static ArrayList<Evento> eventos;
-	public static ArrayList<Evento> chamadasAtivass;
 	private static TipoDuracao tipoDuracaoC1;
 	private static TipoDuracao tipoDuracaoC2;
 	public static boolean pausado;
@@ -26,12 +26,15 @@ public class Simulador implements Runnable {
 	public static int duracaoExecucao;
 	public static boolean fastForward;
 	public static Estatistica estatistica;
+	private static Simulacao simulacao;
 
-	public static void init() {
+	public static void init(Simulacao novaSimulacao) {
+		simulacao = novaSimulacao;
+		estatistica = simulacao.getEstatistica();
+
 		// Atributos de controle; // TODO Poderia talvez criar um override pra
 		// lista ordenar no add =]
 		eventos = new ArrayList<Evento>();
-		chamadasAtivas = new ArrayList<Evento>();
 		tempoAtual = 0;
 		pausado = false;
 		duracaoExecucao = Integer.parseInt(MainInterface.textFieldDuracaoSimulacao.getText()) * 60;
@@ -54,13 +57,8 @@ public class Simulador implements Runnable {
 	}
 
 	public void run() {
-		init();
-
-		// Listas de Estatísticas;
-		ArrayList<Integer> numeroDeChamadas = new ArrayList<Integer>();
-		ArrayList<Integer> ocupacaoC1 = new ArrayList<Integer>();
-		ArrayList<Integer> ocupacaoC2 = new ArrayList<Integer>();
-		ArrayList<Integer> duracaoChamadas = new ArrayList<Integer>();
+		// TODO Garantir chamada do init l[a na interface e foda-se;
+		// init();
 
 		// Loop principal da simulação;
 		while (rodando) {
@@ -71,6 +69,7 @@ public class Simulador implements Runnable {
 					Thread.sleep(15);
 				} catch (InterruptedException e) {
 					MainInterface.print("Problema na Thread de Simulação...");
+					simulacao.getLog().add("Problema na Thread de Simulação...");
 					rodando = false;
 					continue;
 				}
@@ -90,10 +89,12 @@ public class Simulador implements Runnable {
 				// TODO Salvar isso aqui em algum lugar antes que atinjamos
 				// 35Hz;
 				MainInterface.print("Tempo atual de execução " + tempoAtual + " segundos");
+				simulacao.getLog().add("Tempo atual de execução " + tempoAtual + " segundos");
 				ArrayList<Evento> listaEventos = getEventosNoTempo(tempoAtual);
 
 				for (Evento evento : listaEventos) {
 					MainInterface.print(evento.toString());
+					simulacao.getLog().add(evento.toString());
 
 					TipoChamada tipoChamada = evento.getChamada().getTipoChamada();
 
@@ -122,16 +123,41 @@ public class Simulador implements Runnable {
 				}
 
 				// Cálculo das estatísticas;
-				// Número de chamadas ativas;
+				// Número de chamadas ativas: número de ids diferentes no
+				// sistema nesse momento;
+				int numeroDeIds = verificaNumIdsNoSistema();
+				simulacao.getEstatistica().addListaNumeroDeChamadasEstatistica(numeroDeIds);
 
 				// Ocupação C1 e C2;
-				ocupacaoC1.add(EventoController.getCelula1().getOcupacao());
-				ocupacaoC2.add(EventoController.getCelula2().getOcupacao());
-
-				// Duração chamadas;
-
+				simulacao.getEstatistica().addListaocupacaoC1Estatistica(EventoController.getCelula1().getOcupacao());
+				simulacao.getEstatistica().addListaocupacaoC2Estatistica(EventoController.getCelula2().getOcupacao());
 			}
 		}
+
+		MainInterface.buttonSimulacao.setEnabled(true);
+		MainInterface.buttonPausarSimulacao.setEnabled(false);
+	}
+
+	private int verificaNumIdsNoSistema() {
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+
+		for (Evento evento : eventos) {
+			if (evento instanceof EventoChegada) {
+				Integer id = ((EventoChegada) evento).getIdChegada();
+				if (!ids.contains(id))
+					ids.add(id);
+			} else if (evento instanceof EventoSaida) {
+				Integer id = ((EventoSaida) evento).getId();
+				if (!ids.contains(id))
+					ids.add(id);
+			} else if (evento instanceof EventoTroca) {
+				Integer id = ((EventoTroca) evento).getId();
+				if (!ids.contains(id))
+					ids.add(id);
+			}
+		}
+
+		return ids.size();
 	}
 
 	private void criarNovosEventos() {
@@ -162,7 +188,6 @@ public class Simulador implements Runnable {
 		List<Evento> novosEventosC1 = EventoController.criarNovosEventosC1(tipoChamadaC1, tempoAtual, tipoDuracaoC1);
 
 		eventos.addAll(novosEventosC1);
-		chamadasAtivas.addAll(novosEventosC1);
 
 		Collections.sort(eventos);
 	}
@@ -172,7 +197,6 @@ public class Simulador implements Runnable {
 		List<Evento> novosEventosC2 = EventoController.criarNovosEventosC2(tipoChamadaC2, tempoAtual, tipoDuracaoC2);
 
 		eventos.addAll(novosEventosC2);
-		chamadasAtivas.addAll(novosEventosC2);
 
 		Collections.sort(eventos);
 	}
@@ -188,4 +212,7 @@ public class Simulador implements Runnable {
 		return eventosNoTempo;
 	}
 
+	public static void addNovaDuracaoChamada(int duracao) {
+		simulacao.getEstatistica().addListaDuracaoChamadasEstatistica(duracao);
+	}
 }

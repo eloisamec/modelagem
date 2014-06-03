@@ -36,6 +36,12 @@ public class EventoController {
 			eventos.add(eventoTroca);
 		}
 
+		int duracaoChamada = eventoChegada.getChamada().getDuracao();
+		if (tipoChamada.equals(TipoChamada.C1FA)) {
+			duracaoChamada /= 2;
+		}
+		Simulador.addNovaDuracaoChamada(duracaoChamada);
+
 		return eventos;
 	}
 
@@ -55,6 +61,12 @@ public class EventoController {
 			EventoTroca eventoTroca = EventoController.getNovaTroca(eventoChegada);
 			eventos.add(eventoTroca);
 		}
+
+		int duracaoChamada = eventoChegada.getChamada().getDuracao();
+		if (tipoChamada.equals(TipoChamada.C2FA)) {
+			duracaoChamada /= 2;
+		}
+		Simulador.addNovaDuracaoChamada(duracaoChamada);
 
 		return eventos;
 	}
@@ -132,7 +144,6 @@ public class EventoController {
 		}
 
 		Simulador.eventos.removeAll(eventosParaRemover);
-		Simulador.chamadasAtivas.removeAll(eventosParaRemover);
 	}
 
 	private static EventoChegada criarNovaChegada(int lambda, int tempoAtual, TipoDuracao tipoDuracao, TipoChamada tipoChamada,
