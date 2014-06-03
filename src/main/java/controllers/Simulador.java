@@ -11,23 +11,27 @@ import models.EventoTroca;
 import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import models.generic.Evento;
+import utils.Estatistica;
 import views.MainInterface;
 
 public class Simulador implements Runnable {
 
 	private static int tempoAtual;
 	public static ArrayList<Evento> eventos;
+	public static ArrayList<Evento> chamadasAtivass;
 	private static TipoDuracao tipoDuracaoC1;
 	private static TipoDuracao tipoDuracaoC2;
 	public static boolean pausado;
 	public static boolean rodando;
 	public static int duracaoExecucao;
 	public static boolean fastForward;
+	public static Estatistica estatistica;
 
 	public static void init() {
 		// Atributos de controle; // TODO Poderia talvez criar um override pra
 		// lista ordenar no add =]
 		eventos = new ArrayList<Evento>();
+		chamadasAtivas = new ArrayList<Evento>();
 		tempoAtual = 0;
 		pausado = false;
 		duracaoExecucao = Integer.parseInt(MainInterface.textFieldDuracaoSimulacao.getText()) * 60;
@@ -51,6 +55,12 @@ public class Simulador implements Runnable {
 
 	public void run() {
 		init();
+
+		// Listas de Estatísticas;
+		ArrayList<Integer> numeroDeChamadas = new ArrayList<Integer>();
+		ArrayList<Integer> ocupacaoC1 = new ArrayList<Integer>();
+		ArrayList<Integer> ocupacaoC2 = new ArrayList<Integer>();
+		ArrayList<Integer> duracaoChamadas = new ArrayList<Integer>();
 
 		// Loop principal da simulação;
 		while (rodando) {
@@ -110,6 +120,16 @@ public class Simulador implements Runnable {
 				if (tempoAtual > duracaoExecucao) {
 					rodando = false;
 				}
+
+				// Cálculo das estatísticas;
+				// Número de chamadas ativas;
+
+				// Ocupação C1 e C2;
+				ocupacaoC1.add(EventoController.getCelula1().getOcupacao());
+				ocupacaoC2.add(EventoController.getCelula2().getOcupacao());
+
+				// Duração chamadas;
+
 			}
 		}
 	}
@@ -142,6 +162,7 @@ public class Simulador implements Runnable {
 		List<Evento> novosEventosC1 = EventoController.criarNovosEventosC1(tipoChamadaC1, tempoAtual, tipoDuracaoC1);
 
 		eventos.addAll(novosEventosC1);
+		chamadasAtivas.addAll(novosEventosC1);
 
 		Collections.sort(eventos);
 	}
@@ -151,6 +172,7 @@ public class Simulador implements Runnable {
 		List<Evento> novosEventosC2 = EventoController.criarNovosEventosC2(tipoChamadaC2, tempoAtual, tipoDuracaoC2);
 
 		eventos.addAll(novosEventosC2);
+		chamadasAtivas.addAll(novosEventosC2);
 
 		Collections.sort(eventos);
 	}

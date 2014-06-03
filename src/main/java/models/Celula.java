@@ -38,4 +38,11 @@ public class Celula {
 		this.canaisOcupados--;
 	}
 
+	public Integer getOcupacao() {
+		double d1 = canaisOcupados;
+		double d2 = capacidadeCanais;
+		double ocupacao = (d1 / d2) * 100;
+		return (int) ocupacao;
+	}
+
 }

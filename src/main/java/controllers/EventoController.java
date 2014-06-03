@@ -11,7 +11,6 @@ import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import models.generic.Evento;
 import utils.MathsUtils;
-import utils.Statistics;
 import utils.Utils;
 import views.MainInterface;
 
@@ -64,18 +63,16 @@ public class EventoController {
 		if (tipoChamada.getTipoOrigemChamada() == 1) {
 			if (celula1.hasCanaisDisponiveis()) {
 				celula1.incrementaCanaisOcupados();
-				Statistics.increaseNrChamadasChegandoNoSistema();
 			} else {
 				removeEventoById(eventoId);
-				Statistics.increaseNrChamadasPerdidasC1();
+				Simulador.estatistica.increaseNrChamadasPerdidasC1();
 			}
 		} else if (tipoChamada.getTipoOrigemChamada() == 2) {
 			if (celula2.hasCanaisDisponiveis()) {
 				celula2.incrementaCanaisOcupados();
-				Statistics.increaseNrChamadasChegandoNoSistema();
 			} else {
 				removeEventoById(eventoId);
-				Statistics.increaseNrChamadasPerdidasC2();
+				Simulador.estatistica.increaseNrChamadasPerdidasC2();
 			}
 		}
 	}
@@ -87,7 +84,7 @@ public class EventoController {
 				celula2.incrementaCanaisOcupados();
 			} else {
 				removeEventoById(eventoId);
-				Statistics.getNrChamadasPerdidasC2();
+				Simulador.estatistica.getNrChamadasPerdidasC2();
 			}
 		} else if (tipoChamada.equals(TipoChamada.C2C1)) {
 			celula2.decrementarCanaisOcupados();
@@ -95,14 +92,14 @@ public class EventoController {
 				celula1.incrementaCanaisOcupados();
 			} else {
 				removeEventoById(eventoId);
-				Statistics.increaseNrChamadasPerdidasC1();
+				Simulador.estatistica.increaseNrChamadasPerdidasC1();
 			}
 		} else if (tipoChamada.equals(TipoChamada.C1FA)) {
 			celula1.decrementarCanaisOcupados();
-			Statistics.increaseNrChamadasPerdidasFA();
+			Simulador.estatistica.increaseNrChamadasPerdidasFA();
 		} else if (tipoChamada.equals(TipoChamada.C2FA)) {
 			celula2.decrementarCanaisOcupados();
-			Statistics.increaseNrChamadasPerdidasFA();
+			Simulador.estatistica.increaseNrChamadasPerdidasFA();
 		}
 	}
 
@@ -112,7 +109,7 @@ public class EventoController {
 		} else if (tipoChamada.getTipoOrigemChamada() == 2) {
 			celula2.decrementarCanaisOcupados();
 		}
-		Statistics.increaseNrChamadasFinalizadas();
+		Simulador.estatistica.increaseNrChamadasFinalizadas();
 	}
 
 	private static void removeEventoById(int eventoId) {
@@ -135,6 +132,7 @@ public class EventoController {
 		}
 
 		Simulador.eventos.removeAll(eventosParaRemover);
+		Simulador.chamadasAtivas.removeAll(eventosParaRemover);
 	}
 
 	private static EventoChegada criarNovaChegada(int lambda, int tempoAtual, TipoDuracao tipoDuracao, TipoChamada tipoChamada,
@@ -172,5 +170,13 @@ public class EventoController {
 
 	public static void setCelula2(Celula celula2) {
 		EventoController.celula2 = celula2;
+	}
+
+	public static Celula getCelula1() {
+		return celula1;
+	}
+
+	public static Celula getCelula2() {
+		return celula2;
 	}
 }

@@ -643,8 +643,8 @@ public class MainInterface {
 
 		sliderVelocidadePasso = new JSlider();
 		sliderVelocidadePasso.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		sliderVelocidadePasso.setMajorTickSpacing(200);
-		sliderVelocidadePasso.setMaximum(2020);
+		sliderVelocidadePasso.setMajorTickSpacing(100);
+		sliderVelocidadePasso.setMaximum(1020);
 		sliderVelocidadePasso.setMinimum(20);
 		sliderVelocidadePasso.setSnapToTicks(true);
 		sliderVelocidadePasso.setPaintTicks(true);
@@ -677,6 +677,10 @@ public class MainInterface {
 		panel_3.setLayout(null);
 
 		buttonAnalisarSimulaoSelecionada = new JButton("Analisar Simula\u00E7\u00E3o Selecionada");
+		buttonAnalisarSimulaoSelecionada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		buttonAnalisarSimulaoSelecionada.setBounds(10, 21, 181, 23);
 		panel_3.add(buttonAnalisarSimulaoSelecionada);
 		buttonAnalisarSimulaoSelecionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
