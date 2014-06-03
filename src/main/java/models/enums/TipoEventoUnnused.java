@@ -3,7 +3,7 @@ package models.enums;
 public enum TipoEventoUnnused {
 
 	// TODO Tire-me daqui!
-	
+
 	// CHEGADA, SAIDA, TROCA;
 	//
 	// public static TipoEvento aget(String tipoExterno) {

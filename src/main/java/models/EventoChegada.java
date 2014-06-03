@@ -15,7 +15,7 @@ public class EventoChegada extends Evento {
 	public String toString() {
 		return "Chegada <ID: " + idChegada + "; Tempo chegada: " + tempoChegada + ">";
 	}
-	
+
 	public int getIdChegada() {
 		return idChegada;
 	}
