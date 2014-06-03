@@ -29,6 +29,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import controllers.Simulador;
+import javax.swing.JSlider;
 
 @SuppressWarnings("rawtypes")
 public class MainInterface {
@@ -58,7 +59,7 @@ public class MainInterface {
 	public static JList listaSimulacoesScrollPane;
 	public static DecimalFormat formaterDecimal = new DecimalFormat("#.####");
 	public static DecimalFormat formaterDecimalIteracoes = new DecimalFormat();
-	public static JLabel labelIteracoes;
+	public static JLabel labelPasso;
 
 	static JButton buttonGerarGraficoDistancia;
 
@@ -75,6 +76,7 @@ public class MainInterface {
 	private JLabel lblSegundosC1;
 	private JLabel lblSegundosC2;
 	private JLabel labelCanaisC1;
+	public static JSlider sliderVelocidadePasso;
 
 	public MainInterface() {
 		initialize();
@@ -105,7 +107,7 @@ public class MainInterface {
 					textAreaResultado.setText("");
 					// Simulador.numeroTotalIteracoes = 0;
 					// Simulador.id = 1;
-					labelIteracoes.setText("0/2.000.000 itera\u00E7\u00F5es.");
+					labelPasso.setText("0/2.000.000 itera\u00E7\u00F5es.");
 				}
 			}
 		});
@@ -231,11 +233,11 @@ public class MainInterface {
 		textFieldNome.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textFieldNome.setColumns(10);
 
-		labelIteracoes = new JLabel("0/2.000.000 itera\u00E7\u00F5es.");
-		labelIteracoes.setBounds(92, 256, 289, 14);
-		panelSimulacoes.add(labelIteracoes);
-		labelIteracoes.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		labelIteracoes.setHorizontalAlignment(SwingConstants.CENTER);
+		labelPasso = new JLabel("Passo 0");
+		labelPasso.setBounds(218, 263, 202, 14);
+		panelSimulacoes.add(labelPasso);
+		labelPasso.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		labelPasso.setHorizontalAlignment(SwingConstants.CENTER);
 
 		panelCelula1 = new JPanel();
 		panelCelula1.setBounds(10, 68, 202, 184);
@@ -676,6 +678,17 @@ public class MainInterface {
 		lblMinutos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMinutos.setBounds(362, 48, 37, 14);
 		panelSimulacoes.add(lblMinutos);
+		
+		sliderVelocidadePasso = new JSlider();
+		sliderVelocidadePasso.setMajorTickSpacing(8);
+		sliderVelocidadePasso.setMinorTickSpacing(8);
+		sliderVelocidadePasso.setMaximum(2000);
+		sliderVelocidadePasso.setMinimum(50);
+		sliderVelocidadePasso.setSnapToTicks(true);
+		sliderVelocidadePasso.setPaintTicks(true);
+		sliderVelocidadePasso.setPaintLabels(true);
+		sliderVelocidadePasso.setBounds(10, 250, 200, 34);
+		panelSimulacoes.add(sliderVelocidadePasso);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Edi\u00E7\u00E3o e An\u00E1lise",

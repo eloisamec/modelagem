@@ -4,8 +4,15 @@ import models.generic.Evento;
 
 public class EventoSaida extends Evento {
 
-	public EventoSaida(int tempoChegada, Chamada chamada, int id) {
-		super(tempoChegada, chamada, id);
+	private int id;
+
+	public EventoSaida(int tempoSaida, Chamada chamada, int id) {
+		super(tempoSaida, chamada);
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }

@@ -5,18 +5,20 @@ import models.generic.Evento;
 public class EventoTroca extends Evento {
 
 	private int tempoTroca;
+	private int id;
 
-	public EventoTroca(int tempoChegada, int tempoTroca, Chamada chamada, int id) {
-		super(tempoChegada, chamada, id);
-		this.setTempoTroca(tempoTroca);
+	public EventoTroca(int tempoTroca, Chamada chamada, int id) {
+		super(tempoTroca, chamada);
+		this.id = id;
+		this.tempoTroca = tempoTroca;
 	}
 
 	public int getTempoTroca() {
 		return tempoTroca;
 	}
 
-	public void setTempoTroca(int tempoTroca) {
-		this.tempoTroca = tempoTroca;
+	public int getId() {
+		return id;
 	}
 
 }

@@ -2,18 +2,40 @@ package models;
 
 public class Celula {
 
-	private int canais;
+	private int capacidadeCanais;
+	private int canaisOcupados;
 
-	public Celula(int canais) {
-		this.setCanais(canais);
+	public Celula(int capacidadeCanais) {
+		this.canaisOcupados = 0;
+		this.capacidadeCanais = capacidadeCanais;
 	}
 
-	public int getCanais() {
-		return canais;
+	public boolean hasCanaisDisponiveis() {
+		return canaisOcupados < capacidadeCanais;
 	}
 
-	public void setCanais(int canais) {
-		this.canais = canais;
+	public int getCapacidadeCanais() {
+		return capacidadeCanais;
+	}
+
+	public void setCapacidadeCanais(int capacidadeCanais) {
+		this.capacidadeCanais = capacidadeCanais;
+	}
+
+	public int getCanaisOcupados() {
+		return canaisOcupados;
+	}
+
+	public void setCanaisOcupados(int canaisOcupados) {
+		this.canaisOcupados = canaisOcupados;
+	}
+
+	public void incrementaCanaisOcupados() {
+		this.canaisOcupados++;
+	}
+
+	public void decrementarCanaisOcupados() {
+		this.canaisOcupados--;
 	}
 
 }
