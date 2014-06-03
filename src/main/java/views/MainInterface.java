@@ -64,7 +64,7 @@ public class MainInterface {
 	public static DecimalFormat formaterDecimal = new DecimalFormat("#.####");
 	public static DecimalFormat formaterDecimalIteracoes = new DecimalFormat();
 
-	static JButton buttonGerarGraficoDistancia;
+	static JButton buttonGerarGraficos;
 
 	private Thread simulador;
 	private JTextField textFieldNome;
@@ -753,22 +753,23 @@ public class MainInterface {
 		buttonGerarEstatisticas.setForeground(new Color(128, 0, 0));
 		buttonGerarEstatisticas.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		buttonGerarGraficoDistancia = new JButton("Gerar Gráfico");
-		buttonGerarGraficoDistancia.setBounds(10, 21, 181, 23);
-		panel_4.add(buttonGerarGraficoDistancia);
-		buttonGerarGraficoDistancia.addActionListener(new ActionListener() {
+		buttonGerarGraficos = new JButton("Gerar Gráfico");
+		buttonGerarGraficos.setBounds(10, 21, 181, 23);
+		panel_4.add(buttonGerarGraficos);
+		buttonGerarGraficos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = listaSimulacoesComponent.getSelectedIndex();
 				if (index == -1)
 					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
-				// else {
-				// new GraficoDistancia(simulacoes.get(index));
-				// }
+				else {
+					new GraficoOcupacao(simulacoes.get(index));
+					new GraficoNumeroChamadas(simulacoes.get(index));
+				}
 			}
 		});
-		buttonGerarGraficoDistancia.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		buttonGerarGraficoDistancia.setForeground(new Color(128, 0, 0));
-		buttonGerarGraficoDistancia.setName("Create GR");
+		buttonGerarGraficos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		buttonGerarGraficos.setForeground(new Color(128, 0, 0));
+		buttonGerarGraficos.setName("Create GR");
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
