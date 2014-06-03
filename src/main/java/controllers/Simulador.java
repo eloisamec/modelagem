@@ -134,7 +134,7 @@ public class Simulador implements Runnable {
 	}
 
 	private static void criarEventosC1() {
-		TipoChamada tipoChamadaC1 = TipoChamadaController.getTipoChamadaC1((int) Math.random() * 100);
+		TipoChamada tipoChamadaC1 = TipoChamadaController.getTipoChamadaC1((int) (Math.random() * 100));
 		List<Evento> novosEventosC1 = EventoController.criarNovosEventosC1(tipoChamadaC1, tempoAtual, tipoDuracaoC1);
 
 		eventos.addAll(novosEventosC1);
@@ -143,7 +143,7 @@ public class Simulador implements Runnable {
 	}
 
 	private static void criarEventosC2() {
-		TipoChamada tipoChamadaC2 = TipoChamadaController.getTipoChamadaC2((int) Math.random() * 100);
+		TipoChamada tipoChamadaC2 = TipoChamadaController.getTipoChamadaC2((int) (Math.random() * 100));
 		List<Evento> novosEventosC2 = EventoController.criarNovosEventosC2(tipoChamadaC2, tempoAtual, tipoDuracaoC2);
 
 		eventos.addAll(novosEventosC2);

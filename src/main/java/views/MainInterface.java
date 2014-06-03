@@ -21,15 +21,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultCaret;
 
 import controllers.Simulador;
-import javax.swing.JSlider;
 
 @SuppressWarnings("rawtypes")
 public class MainInterface {
@@ -142,15 +143,17 @@ public class MainInterface {
 		mainFrame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JScrollPane scrollPane_1 = new JScrollPane((Component) null);
-		scrollPane_1.setBounds(10, 11, 437, 569);
-		panel.add(scrollPane_1);
+		JScrollPane scrollPaneTextArea = new JScrollPane((Component) null);
+		scrollPaneTextArea.setBounds(10, 11, 437, 569);
+		panel.add(scrollPaneTextArea);
 
 		textAreaResultado = new JTextArea();
+		DefaultCaret caret = (DefaultCaret)textAreaResultado.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		textAreaResultado.setForeground(new Color(0, 0, 205));
 		textAreaResultado.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textAreaResultado.setEditable(false);
-		scrollPane_1.setViewportView(textAreaResultado);
+		scrollPaneTextArea.setViewportView(textAreaResultado);
 
 		JPanel panelDados = new JPanel();
 		panelDados.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Simulador de Chamadas",
