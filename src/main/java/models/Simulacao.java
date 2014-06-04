@@ -1,10 +1,13 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import utils.Estatistica;
 
-public class Simulacao {
+public class Simulacao implements Serializable {
+
+	private static final long serialVersionUID = -7554792485811666284L;
 
 	private String nome;
 	private int idSimulacao;

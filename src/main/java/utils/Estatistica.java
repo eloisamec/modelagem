@@ -1,8 +1,11 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Estatistica {
+public class Estatistica implements Serializable {
+
+	private static final long serialVersionUID = -349967101148918092L;
 
 	private int nrChamadasMinimoNoSistema = 0;
 	private int nrChamadasMedioNoSistema = 0;

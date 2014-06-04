@@ -18,10 +18,6 @@ public class Celula {
 		return capacidadeCanais;
 	}
 
-	public void setCapacidadeCanais(int capacidadeCanais) {
-		this.capacidadeCanais = capacidadeCanais;
-	}
-
 	public int getCanaisOcupados() {
 		return canaisOcupados;
 	}
@@ -30,12 +26,14 @@ public class Celula {
 		this.canaisOcupados = canaisOcupados;
 	}
 
+	// TODO Bug aqui: em algum ponto não está sendo incrementado;
 	public void incrementaCanaisOcupados() {
 		this.canaisOcupados++;
 	}
 
 	public void decrementarCanaisOcupados() {
 		this.canaisOcupados--;
+		this.canaisOcupados = Math.abs(this.canaisOcupados);
 	}
 
 	public Integer getOcupacao() {

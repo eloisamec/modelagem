@@ -33,7 +33,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 
 import models.Simulacao;
+import views.validation.ValidateTextFieldsOnlyDigits;
 import controllers.Simulador;
+import controllers.persistence.CarregarSimulacao;
+import controllers.persistence.SalvarSimulacao;
 
 @SuppressWarnings("rawtypes")
 public class MainInterface {
@@ -83,7 +86,7 @@ public class MainInterface {
 	public static JButton buttonSimulacao;
 	public static JSlider sliderVelocidadePasso;
 
-	private static ArrayList<Simulacao> simulacoes = new ArrayList<Simulacao>();
+	public static ArrayList<Simulacao> simulacoes = new ArrayList<Simulacao>();
 	private static int id;
 
 	public MainInterface() {
@@ -121,9 +124,20 @@ public class MainInterface {
 		mnArquivo.add(menuNovo);
 
 		JMenuItem mntmSalvar = new JMenuItem("Salvar");
+		mntmSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new SalvarSimulacao();
+			}
+		});
 		mnArquivo.add(mntmSalvar);
 
 		JMenuItem mntmCarregar = new JMenuItem("Carregar");
+		mntmCarregar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				new CarregarSimulacao();
+			}
+		});
 		mnArquivo.add(mntmCarregar);
 
 		JMenuItem mntmSair = new JMenuItem("Sair");
@@ -803,6 +817,7 @@ public class MainInterface {
 		buttonSimulacao.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		buttonSimulacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ValidateTextFieldsOnlyDigits.validate();
 				Simulacao simulacao = new Simulacao(textFieldNome.getText(), id++);
 				simulacoes.add(simulacao);
 				listaSimulacoesComponent.updateUI();

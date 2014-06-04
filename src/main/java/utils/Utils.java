@@ -13,6 +13,6 @@ public class Utils {
 		if (number.length() >= (Integer.MAX_VALUE + "").length()) {
 			return Integer.MAX_VALUE;
 		}
-		return number.length() == 0 ? 0 : Integer.parseInt(number);
+		return number.length() == 0 ? 1 : Integer.parseInt(number);
 	}
 }
