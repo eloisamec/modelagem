@@ -57,9 +57,6 @@ public class Simulador implements Runnable {
 	}
 
 	public void run() {
-		// TODO Garantir chamada do init l[a na interface e foda-se;
-		// init();
-
 		// Loop principal da simulação;
 		while (rodando) {
 			// Testa se o sistema está pausado. Se estiver, dorme por 15ms para
@@ -86,8 +83,6 @@ public class Simulador implements Runnable {
 				// Incrementa o passo atual;
 				tempoAtual++;
 
-				// TODO Salvar isso aqui em algum lugar antes que atinjamos
-				// 35Hz;
 				MainInterface.print("Tempo atual de execução " + tempoAtual + " segundos");
 				simulacao.getLog().add("Tempo atual de execução " + tempoAtual + " segundos");
 				ArrayList<Evento> listaEventos = getEventosNoTempo(tempoAtual);
@@ -98,7 +93,6 @@ public class Simulador implements Runnable {
 
 					TipoChamada tipoChamada = evento.getChamada().getTipoChamada();
 
-					// TODO Adicionar os eventos numa nova lista;
 					if (evento instanceof EventoChegada) {
 						EventoController.tratarEventoChegada(((EventoChegada) evento).getIdChegada(), tipoChamada);
 						eventos.remove(evento);
