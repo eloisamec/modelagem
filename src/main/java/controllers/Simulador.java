@@ -12,6 +12,7 @@ import models.Simulacao;
 import models.enums.TipoChamada;
 import models.enums.TipoDuracao;
 import models.generic.Evento;
+import utils.CalculadorEstatisticas;
 import utils.Estatistica;
 import views.MainInterface;
 
@@ -32,8 +33,7 @@ public class Simulador implements Runnable {
 		simulacao = novaSimulacao;
 		estatistica = simulacao.getEstatistica();
 
-		// Atributos de controle; // TODO Poderia talvez criar um override pra
-		// lista ordenar no add =]
+		// Atributos de controle;
 		eventos = new ArrayList<Evento>();
 		tempoAtual = 0;
 		pausado = false;
@@ -134,6 +134,7 @@ public class Simulador implements Runnable {
 			}
 		}
 
+		CalculadorEstatisticas.calcularEstatisticas(simulacao.getEstatistica());
 		MainInterface.buttonSimulacao.setEnabled(true);
 		MainInterface.buttonPausarSimulacao.setEnabled(false);
 	}

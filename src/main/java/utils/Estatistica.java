@@ -30,6 +30,32 @@ public class Estatistica {
 	public Estatistica() {
 	}
 
+	public String toStringInfo() {
+		String info = "---------------Estatísticas da simulação---------------\n\n";
+
+		info += "Número de Chamadas no Sistema:\n";
+		info += "\tMínimo: " + nrChamadasMinimoNoSistema + " chamadas;\n";
+		info += "\tMédio:  " + nrChamadasMedioNoSistema + " chamadas;\n";
+		info += "\tMáximo: " + nrChamadasMaximoNoSistema + " chamadas;\n";
+
+		info += "\nTaxa de ocupação dos canais:\n";
+		info += "\tCanal 1: " + taxaOcupacaoCanaisC1 + "%;\n";
+		info += "\tCanal 2: " + taxaOcupacaoCanaisC2 + "%;\n";
+
+		info += "\nTempo das chamadas:\n";
+		info += "\tMínimo: " + tempoMinimoChamada + " segundos;\n";
+		info += "\tMédio:  " + tempoMedioChamada + " segundos;\n";
+		info += "\tMáximo: " + tempoMaximoChamada + "segundos;\n";
+
+		info += "\nSituação das chamadas:\n";
+		info += "\tFinalizadas: - - - - - " + nrChamadasFinalizadas + " chamadas;\n";
+		info += "\tPerdidas em C1:  - - - " + nrChamadasPerdidasC1 + " chamadas;\n";
+		info += "\tPerdidas em C2:  - - - " + nrChamadasPerdidasC2 + " chamadas;\n";
+		info += "\tPerdidas Fora de Área: " + nrChamadasPerdidasFA + " chamadas;";
+
+		return info;
+	}
+
 	public void addListaNumeroDeChamadasEstatistica(Integer num) {
 		listaNumeroDeChamadasEstatistica.add(num);
 	}

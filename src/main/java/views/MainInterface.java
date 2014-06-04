@@ -87,7 +87,7 @@ public class MainInterface {
 	private static int id;
 
 	public MainInterface() {
-		id = 0;
+		id = 1;
 		initialize();
 	}
 
@@ -110,12 +110,11 @@ public class MainInterface {
 		menuNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if ((JOptionPane.showConfirmDialog(null, "Iniciar nova sess\u00E3o?", "Iniciar", 1)) == 0) {
-					// eventos = new ArrayList<Evento>();
+					simulacoes = new ArrayList<Simulacao>();
 					listaSimulacoesComponent.clearSelection();
 					listaSimulacoesComponent.updateUI();
 					textAreaResultado.setText("");
-					// Simulador.numeroTotalIteracoes = 0;
-					// Simulador.id = 1;
+					id = 1;
 				}
 			}
 		});
@@ -820,13 +819,13 @@ public class MainInterface {
 
 		buttonGerarEstatisticas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// if (simulacoes.size() <= 1)
-				// JOptionPane.showMessageDialog(null,
-				// "Devem existir pelo menos duas simula\u00E7\u00F5es!",
-				// "Erro!", 1);
-				// else {
-				// new Estatisticas();
-				// }
+				int index = listaSimulacoesComponent.getSelectedIndex();
+				if (index == -1)
+					JOptionPane.showMessageDialog(null, "Nenhuma Simula\u00E7\u00E3o est\u00E1 Selecionada!", "Erro!", 1);
+				else {
+					Simulacao simulacao = (Simulacao) simulacoes.get(index);
+					textAreaResultado.setText(simulacao.getEstatistica().toStringInfo());
+				}
 			}
 		});
 	}
