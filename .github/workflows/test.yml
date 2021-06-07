@@ -22,7 +22,7 @@ jobs:
         java-version: '8'
         distribution: 'adopt'
     - name: Build
-      run: mvn -B clean package
+      run: mvn -B clean package compile exec:java -Dmaven.test.skip=true
     - name: Check files
       run: |
            cd target
